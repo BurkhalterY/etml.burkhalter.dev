@@ -1,7 +1,9 @@
 <template>
   <nav>
     <ul>
-      <li></li>
+      <li>
+        <router-link :to="{ name: 'Agenda' }">Agenda</router-link>
+      </li>
     </ul>
   </nav>
 </template>

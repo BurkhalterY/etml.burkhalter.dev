@@ -1,6 +1,7 @@
 <script setup>
-import { dates } from "@/data/agenda.json"
-import { ref } from "vue"
+import { ref as dbRef } from "firebase/database"
+import { computed, ref } from "vue"
+import { useDatabase, useDatabaseList } from "vuefire"
 
 const days = [
   "Dimanche",
@@ -33,9 +34,8 @@ const types = ref({
   summary: { active: true, emoji: "📓" },
 })
 
-/*onMounted(() => {
-  scrollToElement()
-})*/
+const db = useDatabase()
+const dates = useDatabaseList(dbRef(db, "dates"))
 
 const formatDate = (str) => {
   const date = new Date(str)
@@ -43,6 +43,30 @@ const formatDate = (str) => {
     months[date.getMonth()]
   } ${date.getFullYear()}`
 }
+
+const filteredDates = computed(() => {
+  const newDates = []
+  for (let date of dates.value) {
+    const newLines = []
+    for (let line of date.lines) {
+      if (types.value[line.type].active) {
+        newLines.push(line)
+      }
+    }
+    if (newLines.length) {
+      newDates.push({
+        date: formatDate(date.date),
+        lines: newLines,
+      })
+    }
+  }
+  return newDates
+})
+
+/* TODO:
+onMounted(() => {
+  scrollToElement()
+})*/
 </script>
 
 <template>
@@ -77,14 +101,12 @@ const formatDate = (str) => {
         Informations
       </button>
     </div>
-    <div v-for="date of dates" class="p-2 my-2 border rounded-sm">
-      <h2 :id="date.date" class="text-2xl">{{ formatDate(date.date) }}</h2>
-      <template v-for="line of date.lines">
-        <span v-if="types[line.type].active">
-          {{ types[line.type].emoji }}
-          {{ line.matter }} : {{ line.content }}<br />
-        </span>
-      </template>
+    <div v-for="date of filteredDates" class="p-2 my-2 border rounded-sm">
+      <h2 :id="date.date" class="text-2xl">{{ date.date }}</h2>
+      <span v-for="line of date.lines">
+        {{ types[line.type].emoji }}
+        {{ line.matter }} : {{ line.content }}<br />
+      </span>
     </div>
   </div>
 </template>

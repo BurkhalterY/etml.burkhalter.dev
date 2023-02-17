@@ -1,7 +1,9 @@
 <script setup>
 import { ref as dbRef } from "firebase/database"
 import { computed, ref } from "vue"
-import { useDatabase, useDatabaseList } from "vuefire"
+import { useCurrentUser, useDatabase, useDatabaseList } from "vuefire"
+
+const user = useCurrentUser()
 
 const days = [
   "Dimanche",

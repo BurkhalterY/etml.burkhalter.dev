@@ -1,0 +1,29 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "data.child('public').val() === true || (auth !== null && auth.uid === data.child('uid').val())",
+        ".write": "auth !== null && auth.uid === data.child('uid').val()",
+        ".validate": "newData.hasChildren(['firstname', 'lastname', 'promotion', 'public'])",
+        "firstname": {
+          ".validate": "newData.isString()"
+        },
+        "lastname": {
+          ".validate": "newData.isString()"
+        },
+        "promotion": {
+          ".validate": "newData.isString() && (newData.val() == '' || root.child('promotions/' + newData.val()).exists())"
+        },
+        "public": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+    "dates": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "source": "https://github.com/firebase/firebase-js-sdk/blob/master/packages/auth/src/core/errors.ts",
-  "errorsCodes": {
-    "auth/email-already-in-use": "Cette adresse e-mail est déjà utilisée.",
-    "auth/invalid-email": "Adresse e-mail invalide.",
-    "auth/weak-password": "La sécurité de ce mot de passse est trop faible.",
-    "auth/wrong-password": "Mot de passe incorrect."
-  }
-}

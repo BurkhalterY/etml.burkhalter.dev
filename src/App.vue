@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-full min-h-screen">
     <TheHeader />
-    <div class="w-full max-w-3xl p-2 mx-auto my-24 grow">
+    <div class="w-full max-w-5xl p-2 mx-auto my-24 grow">
       <router-view v-slot="{ Component }">
         <transition mode="out-in">
           <component :is="Component" />

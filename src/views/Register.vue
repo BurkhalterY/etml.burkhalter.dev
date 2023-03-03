@@ -1,6 +1,4 @@
 <script setup>
-import { errorsCodes } from "@/data/i18n/fr_FR.json"
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { ref } from "vue"
 
 const email = ref("")
@@ -11,19 +9,7 @@ const promotion = ref("")
 
 const errorMessage = ref("")
 
-const register = () => {
-  const auth = getAuth()
-  createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then((userCredential) => {
-      const user = userCredential.user
-    })
-    .catch((error) => {
-      errorMessage.value = error.message
-      if (errorsCodes.hasOwnProperty(error.code)) {
-        errorMessage.value = errorsCodes[error.code]
-      }
-    })
-}
+const register = () => {}
 </script>
 
 <template>

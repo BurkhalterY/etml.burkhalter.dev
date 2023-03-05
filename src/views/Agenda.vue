@@ -107,11 +107,7 @@ const data = reactive({
   ],
 })
 
-const pages = computed(() => {
-  const leftPage = data.weeks[0].days.splice(0, 3)
-  const rightPage = data.weeks[0].days.splice(-4)
-  return [leftPage, rightPage]
-})
+const week = computed(() => data.weeks[0])
 
 const types = ref({
   homework: { active: true, emoji: "🏠" },
@@ -122,17 +118,30 @@ const types = ref({
 </script>
 
 <template>
-  <div class="flex gap-x-24">
-    <div v-for="page of pages" class="flex flex-col flex-grow">
-      <h2 class="text-3xl font-light">Semaine {{ data.weeks[0].number }}</h2>
-      <div v-for="(day, i) of page">
-        <h3 class="bg-orange-700 text-white p-1">
+  <div style="height: 750px">
+    <div class="flex flex-col flex-wrap h-full gap-y-4 gap-x-32">
+      <h2 class="text-3xl font-light border-b border-black">
+        Semaine {{ week.number }}
+        <span class="float-right">{{ week.dateFrom.getFullYear() }}</span>
+      </h2>
+      <div>
+        <div class="flex w-full gap-x-1">
+          <h3 class="text-sm font-bold text-orange-700 uppercase">
+            Communications
+          </h3>
+          <div class="flex-grow border-b border-orange-700"></div>
+        </div>
+        <div class="w-full border-b border-orange-700">&nbsp;</div>
+        <div class="w-full border-b border-orange-700">&nbsp;</div>
+      </div>
+      <div v-for="(day, i) in week.days">
+        <h3 class="p-1 text-white bg-orange-700">
           <span class="text-3xl font-light">{{ day.date.getDate() }}</span>
-          <span class="text-lg font-light uppercase ml-2">
+          <span class="ml-2 text-lg font-light uppercase">
             {{ days[day.date.getDay()] }}
           </span>
           <span
-            class="text-3xl font-light float-right"
+            class="float-right text-3xl font-light"
             v-if="i == 0 || day.date.getDate() == 1"
           >
             {{ months[day.date.getMonth()] }}
@@ -140,18 +149,25 @@ const types = ref({
         </h3>
         <ul>
           <li
-            v-for="line of day.lines"
-            class="border-orange-700 border-b leading-loose"
+            v-for="line in day.lines"
+            class="leading-relaxed border-b border-orange-700"
           >
-            <input type="checkbox" />
+            <div
+              class="inline-block w-4 h-4 border border-orange-700 cursor-pointer align-sub"
+            />
             {{ types[line.type].emoji }}
             {{ line.matter }} :
             {{ line.content }}
           </li>
           <li
-            v-for="line of day.lines"
-            class="border-orange-700 border-b leading-loose"
-          ></li>
+            v-for="i in Math.max(
+              (day.date.getDay() ? 5 : 3) - day.lines.length,
+              0
+            )"
+            class="leading-relaxed border-b border-orange-700"
+          >
+            &nbsp;
+          </li>
         </ul>
       </div>
     </div>

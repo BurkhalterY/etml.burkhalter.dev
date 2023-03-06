@@ -5,6 +5,11 @@ module.exports = {
     extend: {
       colors: {
         etml: "#0060cf",
+        "bic-blue": "#284283",
+      },
+      fontFamily: {
+        logo: ['"Bank Gothic"'],
+        handwriting: ['"segoe script"'],
       },
     },
   },

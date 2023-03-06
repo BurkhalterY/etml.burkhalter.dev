@@ -1,23 +1,27 @@
+<script setup>
+import TheHeader from "@/components/TheHeader.vue"
+</script>
+
 <template>
   <div>
     <TheHeader />
     <div
       class="relative w-full mx-auto mt-16 mb-8 overflow-hidden drop-shadow-lg max-w-7xl"
     >
-      <div class="p-12 bg-white page">
+      <div class="px-16 py-12 bg-white page">
         <router-view v-slot="{ Component }">
           <transition mode="out-in">
-            <component :is="Component" style="height: 750px" />
+            <component :is="Component" class="pb-8" style="height: 750px" />
           </transition>
         </router-view>
-        <div class="absolute text-sm font-bold bottom-12 left-12 text-etml">
+        <div class="absolute text-sm font-bold bottom-10 left-16 text-etml">
           60
         </div>
-        <div class="absolute text-sm font-bold bottom-12 right-12 text-etml">
+        <div class="absolute text-sm font-bold bottom-10 right-16 text-etml">
           61
         </div>
         <div
-          class="absolute bottom-0 right-0 w-48 h-48 origin-center -rotate-45 border-b border-black border-dashed"
+          class="absolute w-24 h-24 -rotate-45 border-t border-black border-dashed -bottom-12 -right-12"
         />
       </div>
       <div
@@ -31,16 +35,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import TheHeader from "@/components/TheHeader.vue"
-</script>
-
-<style>
-body {
-  background-color: whitesmoke;
-}
-</style>
 
 <style scoped>
 .v-enter-active,

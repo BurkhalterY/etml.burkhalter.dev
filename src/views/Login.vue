@@ -7,32 +7,60 @@
           <br />Ecole Technique<br />Ecole des metiers Lausanne
         </h1>
         <hr class="my-8 border-etml" />
-        <div class="text-sm">
-          <p class="pb-2">
-            Rue de Sébeillon 12<br />
-            1004 Lausanne<br />
-            Tél. <a href="tel:+41213167777">021 316 77 77</a>
-          </p>
-          <p class="pb-2">
-            E-mail :
-            <a href="mailto:secretariat.etml@eduvaud.ch">
-              secretariat.etml@eduvaud.ch
-            </a>
-          </p>
-          <p class="pb-2">
-            Site : <a href="https://www.etml.ch" target="_blank">www.etml.ch</a>
-          </p>
-          <p class="pb-2">
-            Suivi des élèves :<br />
-            <a href="https://gesteleves.etmlnet.local" target="_blank">
-              https://gesteleves.etmlnet.local
-            </a>
-            <br />
-          </p>
+        <div class="flex flex-col text-sm gap-y-2">
+          <ul>
+            <li>Rue de Sébeillon 12</li>
+            <li>1004 Lausanne</li>
+            <li>
+              Tél.
+              <a href="tel:+41213167777" class="hover:underline">
+                021 316 77 77
+              </a>
+            </li>
+            <li>
+              <a
+                href="mailto:secretariat.etml@eduvaud.ch"
+                class="hover:underline"
+              >
+                secretariat.etml@eduvaud.ch
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.etml.ch/"
+                target="_blank"
+                class="hover:underline"
+              >
+                www.etml.ch
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li>&copy; 2023 Burkhalter Yannis</li>
+            <li>
+              <a
+                href="https://etml.burkhalter.dev/"
+                target="_blank"
+                class="hover:underline"
+              >
+                etml.burkhalter.dev
+              </a>
+            </li>
+            <li>
+              View on
+              <a
+                href="https://github.com/BurkhalterY/etml.burkhalter.dev"
+                target="_blank"
+                class="hover:underline"
+              >
+                GitHub
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    <div class="flex flex-col flex-grow mt-4 gap-y-6">
+    <div class="flex flex-col flex-grow mt-8 gap-y-6">
       <h2 class="text-3xl font-light">Agenda</h2>
       <div class="flex items-end gap-x-1">
         <label>Nom :</label>
@@ -66,7 +94,7 @@
         </select>
       </div>
       <textarea
-        class="flex-grow p-2 border outline-none text-bic-blue border-etml font-handwriting"
+        class="flex-grow p-2 border outline-none resize-none text-bic-blue border-etml font-handwriting"
         placeholder="Bio..."
       ></textarea>
     </div>

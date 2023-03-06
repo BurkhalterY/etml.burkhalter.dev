@@ -7,7 +7,7 @@
       <div class="p-12 bg-white page">
         <router-view v-slot="{ Component }">
           <transition mode="out-in">
-            <component :is="Component" />
+            <component :is="Component" style="height: 750px" />
           </transition>
         </router-view>
         <div class="absolute text-sm font-bold bottom-12 left-12 text-etml">

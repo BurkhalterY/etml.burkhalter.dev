@@ -2,7 +2,7 @@
 
 ## Installation
 
-Install the backend: [api.etml.burkhalter.dev](../api.etml.burkhalter.dev)
+Install the backend: [api.etml.burkhalter.dev](https://github.com/BurkhalterY/api.etml.burkhalter.dev)
 
 ```bash
 pnpm i

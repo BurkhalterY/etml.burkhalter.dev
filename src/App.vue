@@ -6,7 +6,7 @@ import TheHeader from "@/components/TheHeader.vue"
   <div>
     <TheHeader />
     <div
-      class="relative max-w-6xl mx-auto mt-16 mb-8 overflow-hidden bg-white drop-shadow-lg demi-page"
+      class="relative max-w-6xl mx-auto mt-16 mb-8 overflow-hidden bg-white drop-shadow-lg page"
     >
       <router-view v-slot="{ Component }">
         <transition mode="out-in">
@@ -26,15 +26,6 @@ import TheHeader from "@/components/TheHeader.vue"
       <div
         class="absolute w-24 h-24 -rotate-45 border-t border-black border-dashed -bottom-12 -right-12"
       />
-      <div
-        class="absolute top-0 w-16 pt-6 mt-16 -translate-x-1/2 left-1/2 right-1/2"
-        style="height: 775px"
-      >
-        <div
-          class="w-full h-full bg-repeat-y bg-contain bg-origin-content bg-clip-content"
-          style="background-image: url('/img/rings.png')"
-        />
-      </div>
     </div>
     <div
       class="absolute top-0 w-16 pt-6 mt-16 -translate-x-1/2 left-1/2 right-1/2"

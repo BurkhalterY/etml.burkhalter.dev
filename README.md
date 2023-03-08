@@ -2,7 +2,9 @@
 
 ## Installation
 
-Install the backend: [api.etml.burkhalter.dev](https://github.com/BurkhalterY/api.etml.burkhalter.dev)
+Before installing this, you will need to install the backend app: [api.etml.burkhalter.dev](https://github.com/BurkhalterY/api.etml.burkhalter.dev)
+
+Then,
 
 ```bash
 pnpm i
@@ -16,4 +18,4 @@ pnpm dev
 
 ## Notes
 
-IRL agenda dimensions: 17 x 22 cm
+IRL agenda dimensions: 17 x 24 cm

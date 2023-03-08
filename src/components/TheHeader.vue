@@ -4,6 +4,7 @@
   >
     <span>etml.burkhalter.dev</span>
     <nav class="flex px-1 border-x gap-x-2">
+      <router-link :to="{ name: 'Home' }">Home</router-link>
       <router-link :to="{ name: 'Login' }">Login</router-link>
       <router-link :to="{ name: 'Agenda' }">Agenda</router-link>
     </nav>

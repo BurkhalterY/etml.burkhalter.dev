@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col pl-16 text-etml" style="margin-left: 50%">
-    <div class="grid grid-cols-8">
-      <img class="col-span-3 p-1" src="/img/etml.png" />
+    <div class="grid grid-cols-7">
+      <img class="col-span-2 p-1" src="/img/etml.png" />
       <div class="col-span-5">
         <h1 class="text-lg font-bold leading-none font-logo">
           <br />Ecole Technique<br />Ecole des metiers Lausanne

@@ -1,5 +1,31 @@
 <script setup>
 import TheHeader from "@/components/TheHeader.vue"
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+
+const pageLeft = computed(() => {
+  switch (route.name) {
+    case "Home":
+      return
+    case "Login":
+      return
+    case "Agenda":
+      return 2 * ((parseInt(route.params.week) + 18) % 52) + 6
+  }
+})
+
+const pageRight = computed(() => {
+  switch (route.name) {
+    case "Home":
+      return
+    case "Login":
+      return 3
+    case "Agenda":
+      return pageLeft.value + 1
+  }
+})
 </script>
 
 <template>
@@ -18,10 +44,10 @@ import TheHeader from "@/components/TheHeader.vue"
         </transition>
       </router-view>
       <div class="absolute text-sm font-bold bottom-10 left-16 text-etml">
-        60
+        {{ pageLeft }}
       </div>
       <div class="absolute text-sm font-bold bottom-10 right-16 text-etml">
-        61
+        {{ pageRight }}
       </div>
       <div
         class="absolute w-24 h-24 -rotate-45 border-t border-black border-dashed -bottom-12 -right-12"

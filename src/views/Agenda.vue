@@ -1,5 +1,8 @@
 <script setup>
 import { computed, reactive, ref } from "vue"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
 
 const days = [
   "Dimanche",
@@ -120,8 +123,8 @@ const types = ref({
 <template>
   <div class="flex flex-col flex-wrap gap-y-4 gap-x-32">
     <h1 class="text-2xl font-light border-b border-black">
-      Semaine {{ week.number }}
-      <span class="float-right">{{ week.dateFrom.getFullYear() }}</span>
+      Semaine {{ route.params.week }}
+      <span class="float-right">{{ route.params.year }}</span>
     </h1>
     <div>
       <div class="flex w-full gap-x-1">

@@ -17,7 +17,7 @@ const routes = [
     component: () => import("@/views/Register.vue"),
   },
   {
-    path: "/:year/:week/:code",
+    path: "/:code/:year/:week",
     name: "Agenda",
     component: () => import("@/views/Agenda.vue"),
   },

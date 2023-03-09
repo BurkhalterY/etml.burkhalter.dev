@@ -6,7 +6,7 @@ import TheHeader from "@/components/TheHeader.vue"
   <div>
     <TheHeader />
     <div
-      class="relative max-w-6xl mx-auto mt-16 mb-8 overflow-hidden bg-white drop-shadow-lg page"
+      class="max-w-6xl mx-auto mt-16 mb-8 overflow-hidden bg-white drop-shadow-lg page"
     >
       <router-view v-slot="{ Component }">
         <transition mode="out-in">

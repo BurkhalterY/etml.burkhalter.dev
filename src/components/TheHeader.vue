@@ -6,7 +6,18 @@
     <nav class="flex px-1 border-x gap-x-2">
       <router-link :to="{ name: 'Home' }">Home</router-link>
       <router-link :to="{ name: 'Login' }">Login</router-link>
-      <router-link :to="{ name: 'Agenda' }">Agenda</router-link>
+      <router-link
+        :to="{
+          name: 'Agenda',
+          params: {
+            year: 2023,
+            week: 9,
+            code: 'mtu1e',
+          },
+        }"
+      >
+        Agenda
+      </router-link>
     </nav>
     <span>&copy; Burkhalter Yannis</span>
   </div>

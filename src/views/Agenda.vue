@@ -166,22 +166,21 @@ const types = ref({
 </script>
 
 <template>
-  <div class="flex flex-col flex-wrap gap-y-4 gap-x-32">
-    <h1 class="text-2xl font-light border-b border-black">
-      Semaine {{ route.params.week }}
-      <span class="float-right">{{ route.params.year }}</span>
-    </h1>
-    <div>
-      <div class="flex w-full gap-x-1">
-        <h2 class="text-xs font-bold text-orange-700 uppercase">
+  <div class="flex flex-col flex-wrap gap-y-4 gap-x-16">
+    <div class="w-1/2 pr-16">
+      <h1 class="text-2xl font-light border-b border-black">
+        Semaine {{ route.params.week }}
+        <span class="float-right">{{ route.params.year }}</span>
+      </h1>
+      <div class="w-full border-b border-orange-700">
+        <h2 class="inline text-xs font-bold text-orange-700 uppercase">
           Communications
         </h2>
-        <div class="flex-grow border-b border-orange-700"></div>
       </div>
       <div class="w-full border-b border-orange-700">&nbsp;</div>
       <div class="w-full border-b border-orange-700">&nbsp;</div>
     </div>
-    <div class="flex-grow" v-for="(day, i) in result?.week?.days || []">
+    <div class="w-1/2 pr-16" v-for="(day, i) in result?.week?.days || []">
       <h2 class="px-1 text-white bg-orange-700">
         <span class="text-2xl font-light">{{
           new Date(day.date).getDate()

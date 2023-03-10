@@ -1,8 +1,53 @@
 <script setup>
-import { computed, reactive, ref } from "vue"
+import { useQuery } from "@vue/apollo-composable"
+import gql from "graphql-tag"
+import { computed, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
+const queryParams = ref({
+  year: parseInt(route.params.year),
+  week: parseInt(route.params.week),
+})
+
+watch(
+  () => route.params,
+  (params) => {
+    queryParams.value = {
+      year: parseInt(route.params.year),
+      week: parseInt(route.params.week),
+    }
+  }
+)
+
+const { result } = useQuery(
+  gql`
+    query getWeek($year: Int, $week: Int) {
+      week(promotion: 1, year: $year, number: $week) {
+        number
+        dateFrom
+        dateTo
+        days {
+          date
+          tasks {
+            id
+            type
+            title
+            content
+            matter {
+              id
+              abbr
+              name
+            }
+          }
+        }
+      }
+    }
+  `,
+  queryParams
+)
+
+const week = computed(() => result.value?.data?.week)
 
 const days = [
   "Dimanche",
@@ -28,7 +73,7 @@ const months = [
   "Décembre",
 ]
 
-const data = reactive({
+/*const data = reactive({
   weeks: [
     {
       number: 9,
@@ -37,7 +82,7 @@ const data = reactive({
       days: [
         {
           date: new Date("2023-02-27"),
-          lines: [
+          tasks: [
             {
               matter: "Général",
               type: "info",
@@ -62,19 +107,19 @@ const data = reactive({
         },
         {
           date: new Date("2023-02-28"),
-          lines: [],
+          tasks: [],
         },
         {
           date: new Date("2023-03-01"),
-          lines: [],
+          tasks: [],
         },
         {
           date: new Date("2023-03-02"),
-          lines: [],
+          tasks: [],
         },
         {
           date: new Date("2023-03-03"),
-          lines: [
+          tasks: [
             {
               matter: "Général",
               type: "info",
@@ -99,18 +144,18 @@ const data = reactive({
         },
         {
           date: new Date("2023-03-04"),
-          lines: [],
+          tasks: [],
         },
         {
           date: new Date("2023-03-05"),
-          lines: [],
+          tasks: [],
         },
       ],
     },
   ],
 })
 
-const week = computed(() => data.weeks[0])
+const week = computed(() => data.weeks[0])*/
 
 const types = ref({
   homework: { active: true, emoji: "🏠" },
@@ -136,22 +181,24 @@ const types = ref({
       <div class="w-full border-b border-orange-700">&nbsp;</div>
       <div class="w-full border-b border-orange-700">&nbsp;</div>
     </div>
-    <div v-for="(day, i) in week.days">
+    <div class="flex-grow" v-for="(day, i) in result?.week?.days || []">
       <h2 class="px-1 text-white bg-orange-700">
-        <span class="text-2xl font-light">{{ day.date.getDate() }}</span>
+        <span class="text-2xl font-light">{{
+          new Date(day.date).getDate()
+        }}</span>
         <span class="ml-2 font-light uppercase text-md">
-          {{ days[day.date.getDay()] }}
+          {{ days[new Date(day.date).getDay()] }}
         </span>
         <span
           class="float-right text-2xl font-light"
-          v-if="i == 0 || day.date.getDate() == 1"
+          v-if="i == 0 || new Date(day.date).getDate() == 1"
         >
-          {{ months[day.date.getMonth()] }}
+          {{ months[new Date(day.date).getMonth()] }}
         </span>
       </h2>
       <ul>
         <li
-          v-for="line in day.lines"
+          v-for="line in day.tasks"
           class="leading-relaxed border-b border-orange-700"
         >
           <div
@@ -163,7 +210,7 @@ const types = ref({
         </li>
         <li
           v-for="i in Math.max(
-            (day.date.getDay() ? 5 : 3) - day.lines.length,
+            (new Date(day.date).getDay() ? 5 : 3) - day.tasks.length,
             0
           )"
           class="leading-relaxed border-b border-orange-700"

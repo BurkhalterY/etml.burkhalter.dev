@@ -12,7 +12,12 @@ const routes = [
     component: () => import("@/views/IntroPage.vue"),
   },
   {
-    path: "/agenda/:code/:year/:week",
+    path: "/schedule/:promotion",
+    name: "Schedule",
+    component: () => import("@/views/SchedulePage.vue"),
+  },
+  {
+    path: "/agenda/:promotion/:year/:week",
     name: "Agenda",
     component: () => import("@/views/AgendaPage.vue"),
   },

@@ -43,15 +43,11 @@ const {
           email
           firstName
           lastName
+          admin
           profiles {
             id
+            promotion
             isPublic
-            promotion {
-              id
-              code
-              startYear
-              endYear
-            }
           }
         }
       }
@@ -71,11 +67,8 @@ const {
 
 onRegisterDone((result) => {
   const data = result.data.register
-  authStore.userId = data.user.id
-  authStore.email = data.user.email
-  authStore.firstName = data.user.firstName
-  authStore.lastName = data.user.lastName
   authStore.token = data.token
+  authStore.user = data.user
   popupStore.component = false
 })
 </script>

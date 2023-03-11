@@ -10,7 +10,7 @@ const popupStore = usePopupStore()
 
 const title = "Pourquoi se créer un compte ?"
 const content =
-  "En vous créant un compte gratuitement sur etml.burkhalter.dev, vous accèdez aux fonctionnalités privées telles que le calculateur de moyenne et prochainement d'autres. Vous ne recevrez aucun e-mail suite à cette inscription."
+  "En vous créant un compte gratuitement sur etml.burkhalter.dev, vous accèdez aux fonctionnalités privées telles que le calculateur de moyenne et d'autres prochainement. Vous ne recevrez aucun e-mail suite à cette inscription."
 </script>
 
 <template>
@@ -52,11 +52,7 @@ const content =
           </ul>
           <ul>
             <li>&copy; 2023 Burkhalter Yannis</li>
-            <li>
-              <a href="https://etml.burkhalter.dev/" class="hover:underline">
-                etml.burkhalter.dev
-              </a>
-            </li>
+            <li class="cursor-pointer hover:underline">etml.burkhalter.dev</li>
             <li>
               View on
               <a
@@ -75,22 +71,22 @@ const content =
     <div class="relative flex-grow">
       <div
         class="flex flex-col h-full gap-6 p-2 -m-2 duration-300 ease-linear rounded"
-        :class="!authStore.userId ? 'bg-slate-200 blur-sm grayscale' : ''"
+        :class="!authStore.user ? 'bg-slate-200 blur-sm grayscale' : ''"
       >
         <div class="flex items-end gap-1">
-          <label>Nom :</label>
-          <input
-            type="text"
-            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            v-model="authStore.lastName"
-            :readonly="!authStore.userId"
-          />
           <label>Prénom :</label>
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            v-model="authStore.firstName"
-            :readonly="!authStore.userId"
+            :value="authStore.user?.firstName"
+            readonly
+          />
+          <label>Nom :</label>
+          <input
+            type="text"
+            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
+            :value="authStore.user?.lastName"
+            readonly
           />
         </div>
         <div class="flex items-end gap-1">
@@ -98,15 +94,14 @@ const content =
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            v-model="authStore.email"
-            :readonly="!authStore.userId"
+            :value="authStore.user?.email"
+            readonly
           />
         </div>
         <div class="flex items-end gap-1">
           <label>Classe :</label>
           <select
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            :readonly="!authStore.userId"
           >
             <option selected hidden></option>
             <option>MTU1E</option>
@@ -116,11 +111,11 @@ const content =
         <textarea
           class="flex-grow p-2 bg-transparent border outline-none resize-none text-bic-blue border-etml font-handwriting"
           placeholder="Bio..."
-          :readonly="!authStore.userId"
+          readonly
         ></textarea>
       </div>
       <div
-        v-if="!authStore.userId"
+        v-if="!authStore.user"
         class="absolute top-0 flex flex-col items-center justify-center w-full h-full gap-2"
       >
         <div class="flex gap-2">

@@ -1,33 +1,10 @@
 <script setup>
 import TheHeader from "@/components/TheHeader.vue"
+import { usePageStore } from "@/stores/page"
 import { usePopupStore } from "@/stores/popup"
-import { computed } from "vue"
-import { useRoute } from "vue-router"
 
-const route = useRoute()
 const popupStore = usePopupStore()
-
-const pageLeft = computed(() => {
-  switch (route.name) {
-    case "Cover":
-      return
-    case "Intro":
-      return
-    case "Agenda":
-      return 2 * ((parseInt(route.params.week) + 18) % 52) + 6
-  }
-})
-
-const pageRight = computed(() => {
-  switch (route.name) {
-    case "Cover":
-      return
-    case "Intro":
-      return 3
-    case "Agenda":
-      return pageLeft.value + 1
-  }
-})
+const pageStore = usePageStore()
 </script>
 
 <template>
@@ -41,11 +18,17 @@ const pageRight = computed(() => {
           <component :is="Component" class="px-16 pt-12 pb-20 h-[800px]" />
         </transition>
       </router-view>
-      <div class="absolute text-sm font-bold bottom-10 left-16 text-etml">
-        {{ pageLeft }}
+      <div
+        v-if="pageStore.pageLeft >= 4"
+        class="absolute text-sm font-bold bottom-10 left-16 text-etml"
+      >
+        {{ pageStore.pageLeft }}
       </div>
-      <div class="absolute text-sm font-bold bottom-10 right-16 text-etml">
-        {{ pageRight }}
+      <div
+        v-if="pageStore.pageRight >= 2"
+        class="absolute text-sm font-bold bottom-10 right-16 text-etml"
+      >
+        {{ pageStore.pageRight }}
       </div>
       <div
         class="absolute w-24 h-24 -rotate-45 border-t border-black border-dashed -bottom-12 -right-12"

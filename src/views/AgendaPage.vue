@@ -1,29 +1,15 @@
 <script setup>
 import { useQuery } from "@vue/apollo-composable"
 import gql from "graphql-tag"
-import { computed, ref, watch } from "vue"
+import { ref } from "vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
-const queryParams = ref({
-  year: parseInt(route.params.year),
-  week: parseInt(route.params.week),
-})
-
-watch(
-  () => route.params,
-  (params) => {
-    queryParams.value = {
-      year: parseInt(route.params.year),
-      week: parseInt(route.params.week),
-    }
-  }
-)
 
 const { result } = useQuery(
   gql`
-    query getWeek($year: Int, $week: Int) {
-      week(promotion: 1, year: $year, number: $week) {
+    query getWeek($promotion: String!, $year: Int!, $week: Int!) {
+      week(promotion: $promotion, year: $year, number: $week) {
         number
         dateFrom
         dateTo
@@ -44,10 +30,14 @@ const { result } = useQuery(
       }
     }
   `,
-  queryParams
+  () => {
+    return {
+      promotion: route.params.promotion,
+      year: parseInt(route.params.year),
+      week: parseInt(route.params.week),
+    }
+  }
 )
-
-const week = computed(() => result.value?.data?.week)
 
 const days = [
   "Dimanche",
@@ -72,91 +62,6 @@ const months = [
   "Novembre",
   "Décembre",
 ]
-
-/*const data = reactive({
-  weeks: [
-    {
-      number: 9,
-      dateFrom: new Date("2023-02-27"),
-      dateTo: new Date("2023-03-03"),
-      days: [
-        {
-          date: new Date("2023-02-27"),
-          tasks: [
-            {
-              matter: "Général",
-              type: "info",
-              content: "Cours en salle N322",
-            },
-            {
-              matter: "Économie",
-              type: "test",
-              content: "Test N° 4",
-            },
-            {
-              matter: "Français",
-              type: "homework",
-              content: "Candide, lire ch. 13-19",
-            },
-            {
-              matter: "Anglais",
-              type: "homework",
-              content: "Unit 4, WB p. 24-25 + voc p. 16-17",
-            },
-          ],
-        },
-        {
-          date: new Date("2023-02-28"),
-          tasks: [],
-        },
-        {
-          date: new Date("2023-03-01"),
-          tasks: [],
-        },
-        {
-          date: new Date("2023-03-02"),
-          tasks: [],
-        },
-        {
-          date: new Date("2023-03-03"),
-          tasks: [
-            {
-              matter: "Général",
-              type: "info",
-              content: "Cours en salle N322",
-            },
-            {
-              matter: "Économie",
-              type: "test",
-              content: "Test N° 4",
-            },
-            {
-              matter: "Français",
-              type: "homework",
-              content: "Candide, lire ch. 13-19",
-            },
-            {
-              matter: "Anglais",
-              type: "homework",
-              content: "Unit 4, WB p. 24-25 + voc p. 16-17",
-            },
-          ],
-        },
-        {
-          date: new Date("2023-03-04"),
-          tasks: [],
-        },
-        {
-          date: new Date("2023-03-05"),
-          tasks: [],
-        },
-      ],
-    },
-  ],
-})
-
-const week = computed(() => data.weeks[0])*/
-
 const types = ref({
   homework: { active: true, emoji: "🏠" },
   test: { active: true, emoji: "📝" },

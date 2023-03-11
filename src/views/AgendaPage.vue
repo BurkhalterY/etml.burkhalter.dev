@@ -173,7 +173,7 @@ const types = ref({
         <span class="float-right">{{ route.params.year }}</span>
       </h1>
       <div class="w-full border-b border-orange-700">
-        <h2 class="inline text-xs font-bold text-orange-700 uppercase">
+        <h2 class="inline font-bold text-orange-700 uppercase text-2xs">
           Communications
         </h2>
       </div>
@@ -182,9 +182,9 @@ const types = ref({
     </div>
     <div class="w-1/2 pr-16" v-for="(day, i) in result?.week?.days || []">
       <h2 class="px-1 text-white bg-orange-700">
-        <span class="text-2xl font-light">{{
-          new Date(day.date).getDate()
-        }}</span>
+        <span class="text-2xl font-light">
+          {{ new Date(day.date).getDate() }}
+        </span>
         <span class="ml-2 font-light uppercase text-md">
           {{ days[new Date(day.date).getDay()] }}
         </span>

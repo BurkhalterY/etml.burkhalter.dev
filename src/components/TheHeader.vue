@@ -19,12 +19,12 @@ const now = ref(getWeekNumber(new Date()))
 
 const previous = computed(() => {
   switch (route.name) {
-    case "Home":
+    case "Cover":
       return
-    case "Login":
-      return { name: "Home" }
+    case "Intro":
+      return { name: "Cover" }
     case "Agenda":
-      if (route.params.week == 34) return { name: "Login" }
+      if (route.params.week == 34) return { name: "Intro" }
       return {
         name: "Agenda",
         params: {
@@ -38,9 +38,9 @@ const previous = computed(() => {
 
 const next = computed(() => {
   switch (route.name) {
-    case "Home":
-      return { name: "Login" }
-    case "Login":
+    case "Cover":
+      return { name: "Intro" }
+    case "Intro":
       return {
         name: "Agenda",
         params: {
@@ -68,10 +68,10 @@ const next = computed(() => {
     class="fixed top-0 left-0 z-10 flex justify-between w-full p-1 text-white bg-etml"
   >
     <span>etml.burkhalter.dev</span>
-    <nav class="flex px-1 border-x gap-x-2">
+    <nav class="flex gap-2 px-1 border-x">
       <router-link :to="{ ...previous }">Previous</router-link>
-      <router-link :to="{ name: 'Home' }">Home</router-link>
-      <router-link :to="{ name: 'Login' }">Login</router-link>
+      <router-link :to="{ name: 'Cover' }">Cover</router-link>
+      <router-link :to="{ name: 'Intro' }">Intro</router-link>
       <router-link
         :to="{
           name: 'Agenda',

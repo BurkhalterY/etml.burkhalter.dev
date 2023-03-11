@@ -11,6 +11,9 @@ module.exports = {
         logo: ['"Bank Gothic"'],
         handwriting: ['"segoe script"'],
       },
+      fontSize: {
+        "2xs": "0.625rem",
+      },
     },
   },
   plugins: [],

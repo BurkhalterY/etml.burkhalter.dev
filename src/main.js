@@ -4,6 +4,7 @@ import {
   InMemoryCache,
 } from "@apollo/client/core"
 import { DefaultApolloClient } from "@vue/apollo-composable"
+import { createPinia } from "pinia"
 import { createApp, h, provide } from "vue"
 import App from "./App.vue"
 import "./index.css"
@@ -25,4 +26,5 @@ createApp({
   render: () => h(App),
 })
   .use(router)
+  .use(createPinia())
   .mount("#app")

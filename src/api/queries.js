@@ -14,9 +14,8 @@ export const GET_WEEK = gql`
           title
           content
           matter {
-            id
             abbr
-            name
+            shortName
           }
         }
       }

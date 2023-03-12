@@ -2,40 +2,68 @@
 import { MUTATE_TASK } from "@/api/mutations"
 import { GET_MATTERS, GET_WEEK } from "@/api/queries"
 import { usePopupStore } from "@/stores/popup"
+import { getWeekNumber } from "@/utils"
 import { useMutation, useQuery } from "@vue/apollo-composable"
 import { ref } from "vue"
-import { useRoute } from "vue-router"
 
-const route = useRoute()
 const popupStore = usePopupStore()
 
 const task = ref({
-  id: null,
-  date: popupStore.additionalData.date,
-  promotion: "mtu1e",
-  type: "homework",
-  title: "",
-  content: "",
-  matter: "",
+  id: popupStore.additionalData.id || null,
+  date: popupStore.additionalData.date || "",
+  promotion: popupStore.additionalData.promotion || "mtu1e",
+  type: popupStore.additionalData.type || "homework",
+  matter: popupStore.additionalData.matter || "",
+  title: popupStore.additionalData.title || "",
+  content: popupStore.additionalData.content || "",
 })
+const originalData = ref({ ...task.value })
 
 const { result } = useQuery(GET_MATTERS)
 
 const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
   variables: task.value,
   update: (cache, { data: { task } }) => {
+    if (originalData.value.id) {
+      const date = new Date(originalData.value.date)
+      const day = (date.getDay() + 6) % 7
+      const { year, week } = getWeekNumber(date)
+
+      const QUERY = {
+        query: GET_WEEK,
+        variables: {
+          promotion: originalData.value.promotion,
+          year: year,
+          week: week,
+        },
+      }
+
+      const cachedData = cache.readQuery(QUERY)
+      const newData = JSON.parse(JSON.stringify(cachedData))
+      newData.week.days[day].tasks = newData.week.days[day].tasks.filter(
+        (task) => task.id != originalData.value.id
+      )
+      cache.writeQuery({ ...QUERY, data: newData })
+    }
+
+    const date = new Date(task.date)
+    const day = (date.getDay() + 6) % 7
+    const { year, week } = getWeekNumber(date)
+
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        promotion: route.params.promotion,
-        year: parseInt(route.params.year),
-        week: parseInt(route.params.week),
+        promotion: task.promotion,
+        year: year,
+        week: week,
       },
     }
     const cachedData = cache.readQuery(QUERY)
-    const newData = JSON.parse(JSON.stringify(cachedData))
-    newData.week.days[popupStore.additionalData.day].tasks.push(task)
-    cache.writeQuery({ ...QUERY, data: newData })
+    if (cachedData) {
+      const newData = JSON.parse(JSON.stringify(cachedData))
+      newData.week.days[day].tasks.push(task)
+      cache.writeQuery({ ...QUERY, data: newData })
+    }
   },
 }))
 

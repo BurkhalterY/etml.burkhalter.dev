@@ -80,9 +80,8 @@ export const MUTATE_TASK = gql`
       title
       content
       matter {
-        id
         abbr
-        name
+        shortName
       }
     }
   }

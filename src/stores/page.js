@@ -1,3 +1,4 @@
+import { getWeekNumber } from "@/utils"
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
@@ -6,18 +7,7 @@ export const usePageStore = defineStore("page", () => {
   const route = useRoute()
   const router = useRouter()
 
-  const getWeekNumber = (d) => {
-    /*
-     * Source: http://www.merlyn.demon.co.uk/weekcalc.htm#WNR
-     */
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7))
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
-    const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7)
-    return { year: d.getFullYear(), week: weekNo }
-  }
-
-  const now = ref(getWeekNumber(new Date()))
+  const now = ref(getWeekNumber(new Date(Date.now() + 3600 * 24000))) // jump directly to the next week when it is the weekend
 
   const pageLeft = computed({
     get() {

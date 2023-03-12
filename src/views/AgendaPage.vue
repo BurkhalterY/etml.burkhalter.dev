@@ -87,15 +87,38 @@ const types = ref({
       </h2>
       <ul>
         <li
-          v-for="line in day.tasks.slice(0, day.date.getDay() ? 4 : 2)"
+          v-for="task in day.tasks.slice(0, day.date.getDay() ? 4 : 2)"
           class="leading-relaxed truncate border-b border-orange-700"
         >
           <div
-            class="inline-block w-4 h-4 border border-orange-700 cursor-pointer align-sub"
+            class="inline-block w-4 h-4 mb-1 align-middle border border-orange-700 cursor-pointer"
           />
-          {{ types[line.type].emoji }}
-          {{ line.matter.name }} :
-          {{ line.title }}
+          {{}}
+          <strong v-if="task.matter.shortName" class="inline-block w-20">
+            {{ task.matter.shortName }}
+          </strong>
+          {{ types[task.type].emoji }}
+          {{ task.title }}
+          <button
+            v-if="authStore.user?.admin"
+            @click="
+              ;[
+                (popupStore.component = TaskForm),
+                (popupStore.additionalData = {
+                  id: task.id,
+                  date: day.strDate,
+                  promotion: route.params.promotion,
+                  type: task.type,
+                  matter: task.matter.abbr,
+                  title: task.title,
+                  content: task.content,
+                }),
+              ]
+            "
+            class="px-0.5 rounded text-sm text-white bg-etml"
+          >
+            Edit
+          </button>
         </li>
         <li class="leading-relaxed border-b border-orange-700">
           <span v-if="day.tasks.length > (day.date.getDay() ? 4 : 2)">
@@ -113,11 +136,11 @@ const types = ref({
             </button>
           </span>
           <button
-            v-if="authStore.user"
+            v-if="authStore.user?.admin"
             @click="
               ;[
                 (popupStore.component = TaskForm),
-                (popupStore.additionalData = { date: day.strDate, day: i }),
+                (popupStore.additionalData = { date: day.strDate }),
               ]
             "
             class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml"

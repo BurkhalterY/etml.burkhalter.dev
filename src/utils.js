@@ -8,3 +8,59 @@ export const getWeekNumber = (d) => {
   const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7)
   return { year: d.getFullYear(), week: weekNo }
 }
+
+export const days = [
+  "Dimanche",
+  "Lundi",
+  "Mardi",
+  "Mercredi",
+  "Jeudi",
+  "Vendredi",
+  "Samedi",
+]
+export const months = [
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Août",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Décembre",
+]
+export const types = {
+  homework: { emoji: "" },
+  test: { emoji: "📝" },
+  info: { emoji: "📢" },
+  summary: { emoji: "📓" },
+}
+
+const typesOrder = ["info", "test", "homework", "summary"]
+const mattersOrder = [
+  [],
+  ["etml", "hispol", "ecdr", "fran", "mathfon", "angl", "tib"],
+  [],
+  [],
+  [],
+  ["etml", "fran", "mathfon", "hispol", "phys", "alle", "tib"],
+  [],
+]
+export const tasksSorter = (a, b) => {
+  const typeA = typesOrder.indexOf(a.type)
+  const typeB = typesOrder.indexOf(b.type)
+
+  if (typeA < typeB) return -1
+  if (typeA > typeB) return 1
+
+  const matterA = mattersOrder[new Date(a.date).getDay()].indexOf(a.matter.abbr)
+  const matterB = mattersOrder[new Date(b.date).getDay()].indexOf(b.matter.abbr)
+
+  if (matterA < matterB) return -1
+  if (matterA > matterB) return 1
+
+  return 0
+}

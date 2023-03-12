@@ -10,6 +10,8 @@ export const GET_WEEK = gql`
         date
         tasks {
           id
+          date
+          promotion
           type
           title
           content

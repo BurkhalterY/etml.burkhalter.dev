@@ -4,8 +4,8 @@ import DayPopup from "@/components/DayPopup.vue"
 import TaskForm from "@/components/TaskForm.vue"
 import { useAuthStore } from "@/stores/auth"
 import { usePopupStore } from "@/stores/popup"
+import { days, months, tasksSorter, types } from "@/utils"
 import { useQuery } from "@vue/apollo-composable"
-import { ref } from "vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
@@ -18,36 +18,6 @@ const { result } = useQuery(GET_WEEK, () => {
     year: parseInt(route.params.year),
     week: parseInt(route.params.week),
   }
-})
-
-const days = [
-  "Dimanche",
-  "Lundi",
-  "Mardi",
-  "Mercredi",
-  "Jeudi",
-  "Vendredi",
-  "Samedi",
-]
-const months = [
-  "Janvier",
-  "Février",
-  "Mars",
-  "Avril",
-  "Mai",
-  "Juin",
-  "Juillet",
-  "Août",
-  "Septembre",
-  "Octobre",
-  "Novembre",
-  "Décembre",
-]
-const types = ref({
-  homework: { active: true, emoji: "" },
-  test: { active: true, emoji: "📝" },
-  info: { active: true, emoji: "📢" },
-  summary: { active: true, emoji: "📓" },
 })
 
 const LINES_PER_DAY = 5
@@ -91,11 +61,14 @@ const LINES_ON_SUNDAY = 3
       </h2>
       <ul>
         <li
-          v-for="task in day.tasks.slice(
-            0,
-            (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) - 1
-          )"
-          class="leading-relaxed truncate border-b border-orange-700"
+          v-for="task in [...day.tasks]
+            .sort(tasksSorter)
+            .slice(
+              0,
+              (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) - 1
+            )"
+          class="relative leading-relaxed truncate border-b border-orange-700"
+          :class="{ 'pr-8': authStore.user?.admin }"
         >
           <div
             class="inline-block w-4 h-4 mb-1 align-middle border border-orange-700 cursor-pointer"
@@ -104,6 +77,7 @@ const LINES_ON_SUNDAY = 3
           <strong v-if="task.matter.shortName" class="inline-block w-20">
             {{ task.matter.shortName }}
           </strong>
+
           {{ types[task.type].emoji }} {{ task.title }}
           <button
             v-if="authStore.user?.admin"
@@ -112,7 +86,7 @@ const LINES_ON_SUNDAY = 3
                 (popupStore.component = TaskForm),
                 (popupStore.additionalData = {
                   id: task.id,
-                  date: day.strDate,
+                  date: task.date,
                   promotion: route.params.promotion,
                   type: task.type,
                   matter: task.matter.abbr,
@@ -121,7 +95,7 @@ const LINES_ON_SUNDAY = 3
                 }),
               ]
             "
-            class="px-0.5 rounded text-sm text-white bg-etml"
+            class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml absolute right-0 my-1"
           >
             Edit
           </button>

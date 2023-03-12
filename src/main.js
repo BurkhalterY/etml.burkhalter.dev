@@ -35,3 +35,20 @@ createApp({
   .use(router)
   .use(createPinia())
   .mount("#app")
+
+const scalars = {
+  Date: {
+    parseValue: (value) => {
+      console.log(value)
+      return new Date(value)
+    },
+    parseLiteral: (value) => {
+      console.log(value)
+      return new Date(value)
+    },
+    serialize: (value) => {
+      console.log(value)
+      return value.toISOString()
+    },
+  },
+}

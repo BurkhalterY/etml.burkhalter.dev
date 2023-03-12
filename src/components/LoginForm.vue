@@ -1,8 +1,8 @@
 <script setup>
+import { LOGIN } from "@/api/mutations"
 import { useAuthStore } from "@/stores/auth"
 import { usePopupStore } from "@/stores/popup"
 import { useMutation } from "@vue/apollo-composable"
-import gql from "graphql-tag"
 import { ref } from "vue"
 
 const authStore = useAuthStore()
@@ -15,33 +15,12 @@ const {
   mutate: login,
   error: loginError,
   onDone: onLoginDone,
-} = useMutation(
-  gql`
-    mutation ($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
-        token
-        user {
-          id
-          email
-          firstName
-          lastName
-          admin
-          profiles {
-            id
-            promotion
-            isPublic
-          }
-        }
-      }
-    }
-  `,
-  () => ({
-    variables: {
-      email: email.value,
-      password: password.value,
-    },
-  })
-)
+} = useMutation(LOGIN, () => ({
+  variables: {
+    email: email.value,
+    password: password.value,
+  },
+}))
 
 onLoginDone((result) => {
   const data = result.data.login

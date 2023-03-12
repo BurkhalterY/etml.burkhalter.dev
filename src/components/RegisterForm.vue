@@ -1,8 +1,8 @@
 <script setup>
+import { REGISTER } from "@/api/mutations"
 import { useAuthStore } from "@/stores/auth"
 import { usePopupStore } from "@/stores/popup"
 import { useMutation } from "@vue/apollo-composable"
-import gql from "graphql-tag"
 import { ref } from "vue"
 
 const authStore = useAuthStore()
@@ -19,51 +19,16 @@ const {
   mutate: register,
   error: registerError,
   onDone: onRegisterDone,
-} = useMutation(
-  gql`
-    mutation (
-      $email: String!
-      $password: String!
-      $firstName: String
-      $lastName: String
-      $promotion: String
-      $isPublic: Boolean
-    ) {
-      register(
-        email: $email
-        password: $password
-        firstName: $firstName
-        lastName: $lastName
-        promotion: $promotion
-        isPublic: $isPublic
-      ) {
-        token
-        user {
-          id
-          email
-          firstName
-          lastName
-          admin
-          profiles {
-            id
-            promotion
-            isPublic
-          }
-        }
-      }
-    }
-  `,
-  () => ({
-    variables: {
-      email: email.value,
-      password: password.value,
-      firstName: firstName.value,
-      lastName: lastName.value,
-      promotion: promotion.value,
-      isPublic: isPublic.value,
-    },
-  })
-)
+} = useMutation(REGISTER, () => ({
+  variables: {
+    email: email.value,
+    password: password.value,
+    firstName: firstName.value,
+    lastName: lastName.value,
+    promotion: promotion.value,
+    isPublic: isPublic.value,
+  },
+}))
 
 onRegisterDone((result) => {
   const data = result.data.register
@@ -119,7 +84,7 @@ onRegisterDone((result) => {
       @keyup.enter="register"
     >
       <option></option>
-      <option value="mtu1e-2022-2024">MTU1E (2022 - 2024)</option>
+      <option value="mtu1e">MTU1E</option>
     </select>
 
     <span class="text-sm text-etml">*champs obligatoires</span>

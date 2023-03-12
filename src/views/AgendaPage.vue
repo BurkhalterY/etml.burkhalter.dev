@@ -1,43 +1,23 @@
 <script setup>
+import { GET_WEEK } from "@/api/queries"
+import TaskForm from "@/components/TaskForm.vue"
+import { useAuthStore } from "@/stores/auth"
+import { usePopupStore } from "@/stores/popup"
 import { useQuery } from "@vue/apollo-composable"
-import gql from "graphql-tag"
 import { ref } from "vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
+const authStore = useAuthStore()
+const popupStore = usePopupStore()
 
-const { result } = useQuery(
-  gql`
-    query getWeek($promotion: String!, $year: Int!, $week: Int!) {
-      week(promotion: $promotion, year: $year, number: $week) {
-        number
-        dateFrom
-        dateTo
-        days {
-          date
-          tasks {
-            id
-            type
-            title
-            content
-            matter {
-              id
-              abbr
-              name
-            }
-          }
-        }
-      }
-    }
-  `,
-  () => {
-    return {
-      promotion: route.params.promotion,
-      year: parseInt(route.params.year),
-      week: parseInt(route.params.week),
-    }
+const { result } = useQuery(GET_WEEK, () => {
+  return {
+    promotion: route.params.promotion,
+    year: parseInt(route.params.year),
+    week: parseInt(route.params.week),
   }
-)
+})
 
 const days = [
   "Dimanche",
@@ -63,7 +43,7 @@ const months = [
   "Décembre",
 ]
 const types = ref({
-  homework: { active: true, emoji: "🏠" },
+  homework: { active: true, emoji: "" },
   test: { active: true, emoji: "📝" },
   info: { active: true, emoji: "📢" },
   summary: { active: true, emoji: "📓" },
@@ -85,36 +65,70 @@ const types = ref({
       <div class="w-full border-b border-orange-700">&nbsp;</div>
       <div class="w-full border-b border-orange-700">&nbsp;</div>
     </div>
-    <div class="w-1/2 pr-16" v-for="(day, i) in result?.week?.days || []">
+    <div
+      class="w-1/2 pr-16"
+      v-for="(day, i) in result?.week?.days?.map((day) => {
+        return { ...day, strDate: day.date, date: new Date(day.date) }
+      }) || []"
+    >
       <h2 class="px-1 text-white bg-orange-700">
         <span class="text-2xl font-light">
-          {{ new Date(day.date).getDate() }}
+          {{ day.date.getDate() }}
         </span>
         <span class="ml-2 font-light uppercase text-md">
-          {{ days[new Date(day.date).getDay()] }}
+          {{ days[day.date.getDay()] }}
         </span>
         <span
           class="float-right text-2xl font-light"
-          v-if="i == 0 || new Date(day.date).getDate() == 1"
+          v-if="i == 0 || day.date.getDate() == 1"
         >
-          {{ months[new Date(day.date).getMonth()] }}
+          {{ months[day.date.getMonth()] }}
         </span>
       </h2>
       <ul>
         <li
-          v-for="line in day.tasks"
-          class="leading-relaxed border-b border-orange-700"
+          v-for="line in day.tasks.slice(0, day.date.getDay() ? 4 : 2)"
+          class="leading-relaxed truncate border-b border-orange-700"
         >
           <div
             class="inline-block w-4 h-4 border border-orange-700 cursor-pointer align-sub"
           />
           {{ types[line.type].emoji }}
-          {{ line.matter }} :
-          {{ line.content }}
+          {{ line.matter.name }} :
+          {{ line.title }}
+        </li>
+        <li class="leading-relaxed border-b border-orange-700">
+          <span v-if="day.tasks.length > (day.date.getDay() ? 4 : 2)">
+            + {{ day.tasks.length - (day.date.getDay() ? 4 : 2) }}
+            {{
+              day.tasks.length - (day.date.getDay() ? 4 : 2) >= 2
+                ? "autres éléments"
+                : "autre élément"
+            }}
+            <button
+              @click=""
+              class="mx-0.5 px-0.5 rounded text-sm text-white bg-gray-600"
+            >
+              Voir
+            </button>
+          </span>
+          <button
+            v-if="authStore.user"
+            @click="
+              ;[
+                (popupStore.component = TaskForm),
+                (popupStore.additionalData = { date: day.strDate, day: i }),
+              ]
+            "
+            class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml"
+          >
+            Ajouter
+          </button>
+          &nbsp;
         </li>
         <li
           v-for="i in Math.max(
-            (new Date(day.date).getDay() ? 5 : 3) - day.tasks.length,
+            (day.date.getDay() ? 4 : 2) - day.tasks.length,
             0
           )"
           class="leading-relaxed border-b border-orange-700"

@@ -11,11 +11,14 @@ const pageStore = usePageStore()
   <div>
     <TheHeader />
     <div
-      class="max-w-6xl mx-auto mt-16 mb-8 overflow-hidden bg-white drop-shadow-lg page"
+      class="max-w-xl mx-auto mt-16 mb-8 overflow-hidden bg-white xl:max-w-6xl drop-shadow-lg page"
     >
       <router-view v-slot="{ Component }">
         <transition mode="out-in">
-          <component :is="Component" class="px-16 pt-12 pb-20 h-[800px]" />
+          <component
+            :is="Component"
+            class="px-16 pt-12 pb-20 min-h-[800px] xl:h-[800px]"
+          />
         </transition>
       </router-view>
       <div
@@ -35,7 +38,7 @@ const pageStore = usePageStore()
       />
     </div>
     <div
-      class="absolute top-0 w-16 pt-6 mt-16 -translate-x-1/2 left-1/2 right-1/2 h-[775px]"
+      class="xl:absolute hidden top-0 w-16 pt-6 mt-16 -translate-x-1/2 left-1/2 right-1/2 h-[775px]"
     >
       <div
         class="w-full h-full bg-repeat-y bg-contain bg-origin-content bg-clip-content"
@@ -67,25 +70,27 @@ const pageStore = usePageStore()
   opacity: 0;
 }
 
-.page {
-  clip-path: polygon(
-    0 0,
-    calc(50% - 0.25rem) 0,
-    calc(50% - 0.25rem) 100%,
-    100% 100%,
-    100% 0,
-    calc(50% + 0.25rem) 0,
-    calc(50% + 0.25rem) 100%,
-    0 100%
-  );
-}
+@media (min-width: 1280px) {
+  .page {
+    clip-path: polygon(
+      0 0,
+      calc(50% - 0.25rem) 0,
+      calc(50% - 0.25rem) 100%,
+      100% 100%,
+      100% 0,
+      calc(50% + 0.25rem) 0,
+      calc(50% + 0.25rem) 100%,
+      0 100%
+    );
+  }
 
-.demi-page {
-  clip-path: polygon(
-    100% 100%,
-    100% 0,
-    calc(50% + 0.25rem) 0,
-    calc(50% + 0.25rem) 100%
-  );
+  .demi-page {
+    clip-path: polygon(
+      100% 100%,
+      100% 0,
+      calc(50% + 0.25rem) 0,
+      calc(50% + 0.25rem) 100%
+    );
+  }
 }
 </style>

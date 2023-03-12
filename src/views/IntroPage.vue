@@ -14,12 +14,12 @@ const content =
 </script>
 
 <template>
-  <div class="flex flex-col pl-16 text-etml ml-[50%]">
+  <div class="flex flex-col pl-16 text-etml xl:ml-[50%]">
     <div class="grid grid-cols-7 mb-8">
       <img class="col-span-2 p-1" src="/img/etml.png" alt="ETML" />
       <div class="col-span-5">
         <h1 class="text-lg font-bold leading-none font-logo">
-          <br />Ecole Technique<br />Ecole des metiers Lausanne
+          <br />Ecole Technique <br />Ecole des metiers Lausanne
         </h1>
         <hr class="my-8 border-etml" />
         <div class="flex flex-col gap-2 text-sm">

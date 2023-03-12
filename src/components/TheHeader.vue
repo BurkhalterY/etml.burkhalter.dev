@@ -6,10 +6,10 @@ const pageStore = usePageStore()
 
 <template>
   <div
-    class="fixed top-0 left-0 z-10 flex justify-between w-full p-1 text-white bg-etml"
+    class="fixed top-0 left-0 z-10 justify-between w-full p-1 text-white xl:flex bg-etml"
   >
-    <span>etml.burkhalter.dev</span>
-    <nav class="flex">
+    <span class="hidden xl:inline">etml.burkhalter.dev</span>
+    <nav class="flex justify-center">
       <div class="flex gap-2 px-2 border-x">
         <span
           @click="pageStore.pageLeft = 0"
@@ -59,6 +59,6 @@ const pageStore = usePageStore()
         Aujourd'hui
       </router-link>
     </nav>
-    <span>&copy; Burkhalter Yannis</span>
+    <span class="hidden xl:inline">&copy; Burkhalter Yannis</span>
   </div>
 </template>

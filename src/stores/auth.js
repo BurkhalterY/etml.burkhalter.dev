@@ -14,7 +14,7 @@ export const useAuthStore = defineStore("auth", () => {
   const { result, loading } = useQuery(GET_ME)
 
   watch(loading, async (value) => {
-    if (!value && result.value.me) {
+    if (!value && result.value?.me) {
       user.value = result.value.me
     }
   })

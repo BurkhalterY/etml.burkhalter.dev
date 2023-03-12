@@ -11,7 +11,7 @@ import "./index.css"
 import router from "./router"
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:8000/graphql",
+  uri: import.meta.env.VITE_API_URL,
   fetch: (uri, options) => {
     const token = localStorage.getItem("token")
     if (token) {

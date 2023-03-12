@@ -26,7 +26,7 @@ const LINES_ON_SUNDAY = 3
 
 <template>
   <div class="flex flex-col flex-wrap gap-y-4 gap-x-16">
-    <div class="w-1/2 pr-16">
+    <div class="w-full xl:w-1/2 xl:pr-16">
       <h1 class="text-2xl font-light border-b border-black">
         Semaine {{ route.params.week }}
         <span class="float-right">{{ route.params.year }}</span>
@@ -40,7 +40,7 @@ const LINES_ON_SUNDAY = 3
       <div class="w-full border-b border-orange-700">&nbsp;</div>
     </div>
     <div
-      class="w-1/2 pr-16"
+      class="w-full xl:w-1/2 xl:pr-16"
       v-for="(day, i) in result?.week?.days?.map((day) => {
         return { ...day, strDate: day.date, date: new Date(day.date) }
       }) || []"

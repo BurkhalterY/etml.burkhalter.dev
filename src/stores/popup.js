@@ -5,8 +5,8 @@ export const usePopupStore = defineStore("popup", () => {
   const component = shallowRef(null)
   const additionalData = ref(null)
 
-  watch(component, async (value, oldValue) => {
-    if (oldValue) additionalData.value = null
+  watch(component, async (newValue, oldValue) => {
+    if (oldValue && !newValue) additionalData.value = null
   })
 
   return { component, additionalData }

@@ -48,7 +48,7 @@ const pageStore = usePageStore()
         class="fixed top-0 left-0 z-20 flex items-center justify-center w-full h-full bg-black bg-opacity-25"
         @click="popupStore.component = null"
       >
-        <div class="w-full max-w-sm p-4 bg-white rounded" @click.stop>
+        <div class="p-4 bg-white rounded w-max" @click.stop>
           <component :is="popupStore.component" />
         </div>
       </div>

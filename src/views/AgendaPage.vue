@@ -1,5 +1,6 @@
 <script setup>
 import { GET_WEEK } from "@/api/queries"
+import DayPopup from "@/components/DayPopup.vue"
 import TaskForm from "@/components/TaskForm.vue"
 import { useAuthStore } from "@/stores/auth"
 import { usePopupStore } from "@/stores/popup"
@@ -48,6 +49,9 @@ const types = ref({
   info: { active: true, emoji: "📢" },
   summary: { active: true, emoji: "📓" },
 })
+
+const LINES_PER_DAY = 5
+const LINES_ON_SUNDAY = 3
 </script>
 
 <template>
@@ -87,7 +91,10 @@ const types = ref({
       </h2>
       <ul>
         <li
-          v-for="task in day.tasks.slice(0, day.date.getDay() ? 4 : 2)"
+          v-for="task in day.tasks.slice(
+            0,
+            (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) - 1
+          )"
           class="leading-relaxed truncate border-b border-orange-700"
         >
           <div
@@ -97,8 +104,7 @@ const types = ref({
           <strong v-if="task.matter.shortName" class="inline-block w-20">
             {{ task.matter.shortName }}
           </strong>
-          {{ types[task.type].emoji }}
-          {{ task.title }}
+          {{ types[task.type].emoji }} {{ task.title }}
           <button
             v-if="authStore.user?.admin"
             @click="
@@ -121,15 +127,33 @@ const types = ref({
           </button>
         </li>
         <li class="leading-relaxed border-b border-orange-700">
-          <span v-if="day.tasks.length > (day.date.getDay() ? 4 : 2)">
-            + {{ day.tasks.length - (day.date.getDay() ? 4 : 2) }}
+          <span
+            v-if="
+              day.tasks.length >=
+              (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY)
+            "
+          >
+            +
             {{
-              day.tasks.length - (day.date.getDay() ? 4 : 2) >= 2
+              day.tasks.length +
+              1 -
+              (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY)
+            }}
+            {{
+              day.tasks.length +
+                1 -
+                (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) >=
+              2
                 ? "autres éléments"
                 : "autre élément"
             }}
             <button
-              @click=""
+              @click="
+                ;[
+                  (popupStore.component = DayPopup),
+                  (popupStore.additionalData = { day }),
+                ]
+              "
               class="mx-0.5 px-0.5 rounded text-sm text-white bg-gray-600"
             >
               Voir
@@ -151,7 +175,9 @@ const types = ref({
         </li>
         <li
           v-for="i in Math.max(
-            (day.date.getDay() ? 4 : 2) - day.tasks.length,
+            (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) -
+              day.tasks.length -
+              1,
             0
           )"
           class="leading-relaxed border-b border-orange-700"

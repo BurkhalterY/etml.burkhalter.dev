@@ -1,5 +1,5 @@
 <script setup>
-import { MUTATE_TASK } from "@/api/mutations"
+import { DELETE_TASK, MUTATE_TASK } from "@/api/mutations"
 import { GET_MATTERS, GET_WEEK } from "@/api/queries"
 import { usePopupStore } from "@/stores/popup"
 import { getWeekNumber } from "@/utils"
@@ -70,6 +70,55 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
 onDone(() => {
   popupStore.component = false
 })
+
+const {
+  mutate: mutateDelete,
+  error: deleteError,
+  onDone: onDeleted,
+} = useMutation(DELETE_TASK, () => ({
+  variables: { id: originalData.value.id },
+  update: (cache) => {
+    const date = new Date(originalData.value.date)
+    const day = (date.getDay() + 6) % 7
+    const { year, week } = getWeekNumber(date)
+
+    const QUERY = {
+      query: GET_WEEK,
+      variables: {
+        promotion: originalData.value.promotion,
+        year: year,
+        week: week,
+      },
+    }
+
+    const cachedData = cache.readQuery(QUERY)
+    const newData = JSON.parse(JSON.stringify(cachedData))
+    newData.week.days[day].tasks = newData.week.days[day].tasks.filter(
+      (task) => task.id != originalData.value.id
+    )
+    cache.writeQuery({ ...QUERY, data: newData })
+  },
+}))
+
+onDeleted(() => {
+  popupStore.component = false
+})
+
+const timer = ref(3)
+let interval
+
+const startInterval = () => {
+  timer.value--
+  interval = setInterval(() => {
+    timer.value--
+    if (timer.value == 0) clearInterval(interval)
+  }, 1000)
+}
+
+const resetInterval = () => {
+  clearInterval(interval)
+  timer.value = 3
+}
 </script>
 
 <template>
@@ -77,6 +126,9 @@ onDone(() => {
     <h2 class="text-xl font-bold text-center">Devoir</h2>
     <span v-if="error" class="text-red-500">
       {{ error.message }}
+    </span>
+    <span v-if="deleteError" class="text-red-500">
+      {{ deleteError.message }}
     </span>
 
     <label>Date :</label>
@@ -135,11 +187,23 @@ onDone(() => {
       @keyup.enter="mutate"
     />
 
-    <button
-      @click="mutate"
-      class="p-2 mt-2 text-white rounded-sm bg-etml hover:opacity-90 active:opacity-80"
-    >
-      Valider
-    </button>
+    <div class="flex gap-1">
+      <button
+        @click="mutate"
+        class="flex-grow p-2 mt-2 text-white rounded-sm bg-etml hover:opacity-90 active:opacity-80"
+      >
+        Valider
+      </button>
+      <button
+        v-if="task.id"
+        @mouseenter="startInterval"
+        @mouseleave="resetInterval"
+        @click="mutateDelete"
+        class="p-2 mt-2 font-bold text-white bg-red-600 rounded-sm hover:opacity-90 active:opacity-80 aspect-square disabled:cursor-not-allowed"
+        :disabled="timer"
+      >
+        {{ timer || "⨉" }}
+      </button>
+    </div>
   </div>
 </template>

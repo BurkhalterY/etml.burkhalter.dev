@@ -21,6 +21,11 @@ const routes = [
     name: "Agenda",
     component: () => import("@/views/AgendaPage.vue"),
   },
+  {
+    path: "/wip",
+    name: "WIP",
+    component: () => import("@/views/WipPage.vue"),
+  },
 ]
 
 const router = createRouter({

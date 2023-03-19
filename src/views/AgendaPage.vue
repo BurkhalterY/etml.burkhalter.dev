@@ -77,8 +77,8 @@ const LINES_ON_SUNDAY = 3
           <strong v-if="task.matter.shortName" class="inline-block w-20">
             {{ task.matter.shortName }}
           </strong>
-
-          {{ types[task.type].emoji }} {{ task.title }}
+          {{ types[task.type].emoji }}
+          <span :title="task.title">{{ task.title }}</span>
           <button
             v-if="authStore.user?.admin"
             @click="

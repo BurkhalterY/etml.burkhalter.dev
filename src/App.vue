@@ -38,7 +38,7 @@ const pageStore = usePageStore()
       />
     </div>
     <div
-      class="xl:absolute hidden top-0 w-16 pt-6 mt-16 -translate-x-1/2 left-1/2 right-1/2 h-[775px]"
+      class="absolute hidden xl:block top-0 w-16 pt-6 mt-16 -translate-x-1/2 left-1/2 right-1/2 h-[775px]"
     >
       <div
         class="w-full h-full bg-repeat-y bg-contain bg-origin-content bg-clip-content"

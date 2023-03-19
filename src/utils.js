@@ -42,11 +42,11 @@ export const types = {
 const typesOrder = ["info", "test", "homework", "summary"]
 const mattersOrder = [
   [],
-  ["etml", "hispol", "ecdr", "fran", "mathfon", "angl", "tib"],
+  ["etml", "tib", "hispol", "ecdr", "fran", "mathfon", "angl"],
   [],
   [],
   [],
-  ["etml", "fran", "mathfon", "hispol", "phys", "alle", "tib"],
+  ["etml", "tib", "fran", "mathfon", "hispol", "phys", "alle"],
   [],
 ]
 export const tasksSorter = (a, b) => {

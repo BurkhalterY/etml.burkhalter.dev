@@ -126,14 +126,16 @@ const friday = [
   {
     start: "16:40",
     end: "17:25",
-    matter: "(Appuis mathématiques)",
+    matter: "Appuis mathématiques",
     classroom: "S312",
+    optional: true,
   },
   {
     start: "17:30",
     end: "18:15",
-    matter: "(Rattrapages tests)",
+    matter: "Rattrapages tests",
     classroom: "",
+    optional: true,
   },
 ]
 
@@ -165,7 +167,7 @@ const days = [monday, friday]
           salle
         </td>
       </tr>
-      <tr v-for="period in day">
+      <tr v-for="period in day" :class="{ 'bg-neutral-200': period.optional }">
         <td class="w-16 border border-etml">{{ period.start }}</td>
         <td class="w-16 border border-etml">{{ period.end }}</td>
         <td class="px-1 text-left border border-etml">

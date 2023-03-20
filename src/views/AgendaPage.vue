@@ -47,7 +47,7 @@ const LINES_ON_SUNDAY = 3
     >
       <h2
         class="px-1 text-white bg-orange-700"
-        :class="day.tasks.length ? 'cursor-pointer' : ''"
+        :class="{ 'cursor-pointer': day.tasks.length }"
         @click="
           day.tasks.length
             ? [

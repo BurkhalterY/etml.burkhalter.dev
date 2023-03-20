@@ -57,12 +57,14 @@ const content =
           <ul>
             <li>&copy; 2023 Burkhalter Yannis</li>
             <li>
-              Le logo et les images appartiennent à l'<a
+              Le logo et les images appartiennent à
+              <a
                 href="https://www.etml.ch/"
                 target="_blank"
                 class="hover:underline"
-                >ETML</a
               >
+                l'école
+              </a>
             </li>
           </ul>
         </div>
@@ -72,7 +74,7 @@ const content =
     <div class="relative flex-grow">
       <div
         class="flex flex-col h-full gap-6 p-2 -m-2 duration-300 ease-linear rounded"
-        :class="!authStore.user ? 'bg-slate-200 blur-sm grayscale' : ''"
+        :class="{ 'bg-slate-200 blur-sm grayscale': !authStore.user }"
       >
         <div class="flex items-end gap-1">
           <label>Prénom :</label>

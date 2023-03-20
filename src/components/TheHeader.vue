@@ -6,10 +6,10 @@ const pageStore = usePageStore()
 
 <template>
   <div
-    class="fixed top-0 left-0 z-10 justify-between w-full p-1 text-white xl:flex bg-etml"
+    class="fixed top-0 left-0 z-10 justify-between w-full p-1 text-white h-18 sm:h-8 xl:flex bg-etml"
   >
     <span class="hidden xl:inline">etml.burkhalter.dev</span>
-    <nav class="flex justify-center">
+    <nav class="flex flex-wrap justify-center text-2xl sm:text-base">
       <div class="flex gap-2 px-2 border-x">
         <span
           @click="pageStore.pageLeft = 0"

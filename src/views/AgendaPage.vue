@@ -45,7 +45,18 @@ const LINES_ON_SUNDAY = 3
         return { ...day, strDate: day.date, date: new Date(day.date) }
       }) || []"
     >
-      <h2 class="px-1 text-white bg-orange-700">
+      <h2
+        class="px-1 text-white bg-orange-700"
+        :class="day.tasks.length ? 'cursor-pointer' : ''"
+        @click="
+          day.tasks.length
+            ? [
+                (popupStore.component = DayPopup),
+                (popupStore.additionalData = { day }),
+              ]
+            : []
+        "
+      >
         <span class="text-2xl font-light">
           {{ day.date.getDate() }}
         </span>
@@ -121,17 +132,6 @@ const LINES_ON_SUNDAY = 3
                 ? "autres éléments"
                 : "autre élément"
             }}
-            <button
-              @click="
-                ;[
-                  (popupStore.component = DayPopup),
-                  (popupStore.additionalData = { day }),
-                ]
-              "
-              class="mx-0.5 px-0.5 rounded text-sm text-white bg-gray-600"
-            >
-              Voir
-            </button>
           </span>
           <button
             v-if="authStore.user?.admin"

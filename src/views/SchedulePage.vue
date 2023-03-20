@@ -126,13 +126,13 @@ const friday = [
   {
     start: "16:40",
     end: "17:25",
-    matter: "Appuis mathématiques",
+    matter: "(Appuis mathématiques)",
     classroom: "S312",
   },
   {
     start: "17:30",
     end: "18:15",
-    matter: "Rattrapages tests",
+    matter: "(Rattrapages tests)",
     classroom: "",
   },
 ]
@@ -168,11 +168,22 @@ const days = [monday, friday]
       <tr v-for="period in day">
         <td class="w-16 border border-etml">{{ period.start }}</td>
         <td class="w-16 border border-etml">{{ period.end }}</td>
-        <td class="px-2 text-left border border-etml">
+        <td class="px-1 text-left border border-etml">
           {{ period.matter }}
         </td>
         <td class="w-16 border bg-opacity-40 bg-etml border-etml">
           {{ period.classroom }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4" class="text-sm font-bold text-left text-etml">
+          <a
+            href="https://www.portail.vd.ch/formation/hyperplanning/etml/invite"
+            target="_blank"
+            class="hover:underline"
+          >
+            Hyperplanning
+          </a>
         </td>
       </tr>
     </table>

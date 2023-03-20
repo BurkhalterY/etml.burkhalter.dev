@@ -1,3 +1,3 @@
 <template>
-  <pre>Work in progress... more pages soon!</pre>
+  <code class="block">Work in progress... more pages soon!</code>
 </template>

@@ -24,44 +24,45 @@ const content =
         <hr class="my-8 border-etml" />
         <div class="flex flex-col gap-2 text-sm">
           <ul>
-            <li>Rue de Sébeillon 12</li>
-            <li>1004 Lausanne</li>
-            <li>
-              Tél.
-              <a href="tel:+41213167777" class="hover:underline">
-                021 316 77 77
-              </a>
-            </li>
-            <li>
-              <a
-                href="mailto:secretariat.etml@eduvaud.ch"
-                class="hover:underline"
-              >
-                secretariat.etml@eduvaud.ch
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.etml.ch/"
-                target="_blank"
-                class="hover:underline"
-              >
-                www.etml.ch
-              </a>
-            </li>
+            <li class="cursor-pointer hover:underline">etml.burkhalter.dev</li>
+            <li>Codé avec 💙 par votre délégué Yannis Burkhalter</li>
           </ul>
           <ul>
-            <li>&copy; 2023 Burkhalter Yannis</li>
-            <li class="cursor-pointer hover:underline">etml.burkhalter.dev</li>
             <li>
-              View on
+              E-mail :
+              <a href="mailto:yannis@burkhalter.dev" class="hover:underline">
+                yannis@burkhalter.dev
+              </a>
+            </li>
+            <li>Discord : aestetica#9521</li>
+            <li>
               <a
                 href="https://github.com/BurkhalterY/etml.burkhalter.dev"
                 target="_blank"
                 class="hover:underline"
               >
-                GitHub
+                View this on GitHub
               </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/BurkhalterY/api.etml.burkhalter.dev"
+                target="_blank"
+                class="hover:underline"
+              >
+                View API on GitHub
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li>&copy; 2023 Burkhalter Yannis</li>
+            <li>
+              Le logo et les images appartiennent à l'<a
+                href="https://www.etml.ch/"
+                target="_blank"
+                class="hover:underline"
+                >ETML</a
+              >
             </li>
           </ul>
         </div>

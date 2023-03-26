@@ -13,7 +13,7 @@ const task = ref({
   date: popupStore.additionalData.date || "",
   promotion: popupStore.additionalData.promotion || "mtu1e",
   type: popupStore.additionalData.type || "homework",
-  matter: popupStore.additionalData.matter || "",
+  matterId: popupStore.additionalData.matterId || null,
   title: popupStore.additionalData.title || "",
   content: popupStore.additionalData.content || "",
 })
@@ -162,11 +162,11 @@ const resetInterval = () => {
 
     <label>Matière :</label>
     <select
-      v-model="task.matter"
+      v-model="task.matterId"
       class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
     >
-      <option v-for="matter in result?.matters || []" :value="matter.abbr">
+      <option v-for="matter in result?.matters || []" :value="matter.id">
         {{ matter.name }}
       </option>
     </select>

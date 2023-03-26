@@ -22,8 +22,10 @@ export const usePageStore = defineStore("page", () => {
           return route.params.week >= 34
             ? (route.params.week - 34) * 2 + 6
             : route.params.week * 2 + 42
-        case "WIP":
+        case "Gradebook":
           return 96
+        case "WIP":
+          return 98
       }
     },
     set(pageNumber) {
@@ -63,7 +65,10 @@ export const usePageStore = defineStore("page", () => {
             },
           })
           break
-        case pageNumber >= 96:
+        case pageNumber >= 96 && pageNumber <= 97:
+          router.push({ name: "Gradebook" })
+          break
+        case pageNumber >= 98:
           router.push({ name: "WIP" })
           break
       }

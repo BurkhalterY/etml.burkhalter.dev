@@ -22,6 +22,11 @@ const routes = [
     component: () => import("@/views/AgendaPage.vue"),
   },
   {
+    path: "/gradebook",
+    name: "Gradebook",
+    component: () => import("@/views/GradebookPage.vue"),
+  },
+  {
     path: "/wip",
     name: "WIP",
     component: () => import("@/views/WipPage.vue"),

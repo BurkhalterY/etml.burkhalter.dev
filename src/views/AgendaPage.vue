@@ -100,7 +100,7 @@ const LINES_ON_SUNDAY = 3
                   date: task.date,
                   promotion: route.params.promotion,
                   type: task.type,
-                  matter: task.matter.abbr,
+                  matterId: task.matter.id,
                   title: task.title,
                   content: task.content,
                 }),

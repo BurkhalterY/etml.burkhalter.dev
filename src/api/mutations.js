@@ -59,7 +59,7 @@ export const MUTATE_TASK = gql`
     $date: Date!
     $promotion: String!
     $type: String!
-    $matter: String!
+    $matterId: Int!
     $title: String!
     $content: String
     $id: Int
@@ -68,7 +68,7 @@ export const MUTATE_TASK = gql`
       date: $date
       promotion: $promotion
       type: $type
-      matter: $matter
+      matterId: $matterId
       title: $title
       content: $content
       id: $id
@@ -80,7 +80,7 @@ export const MUTATE_TASK = gql`
       title
       content
       matter {
-        abbr
+        id
         shortName
       }
     }

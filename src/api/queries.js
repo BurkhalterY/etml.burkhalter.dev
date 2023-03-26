@@ -16,7 +16,7 @@ export const GET_WEEK = gql`
           title
           content
           matter {
-            abbr
+            id
             shortName
           }
         }
@@ -28,8 +28,46 @@ export const GET_WEEK = gql`
 export const GET_MATTERS = gql`
   query getMatters {
     matters {
-      abbr
+      id
       name
+    }
+  }
+`
+
+export const GET_GRADEBOOK = gql`
+  query getGradebook($promotion: String!) {
+    gradebook(promotion: $promotion) {
+      semesterAverage
+      sub4Matters
+      negativePoints
+      success
+      averages {
+        value
+        matter {
+          id
+          abbr
+          name
+        }
+        grades {
+          id
+          value
+          date
+          test {
+            id
+            title
+            content
+          }
+        }
+      }
+    }
+    tests(promotion: $promotion) {
+      id
+      title
+      content
+      matter {
+        id
+        abbr
+      }
     }
   }
 `

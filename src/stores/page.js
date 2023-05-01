@@ -80,7 +80,7 @@ export const usePageStore = defineStore("page", () => {
       return pageLeft.value + 1
     },
     set(pageNumber) {
-      pageLeft = pageNumber - 1
+      pageLeft.value = pageNumber - 1
     },
   })
 

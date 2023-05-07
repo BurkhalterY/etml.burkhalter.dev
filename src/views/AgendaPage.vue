@@ -14,9 +14,9 @@ const popupStore = usePopupStore()
 
 const { result } = useQuery(GET_WEEK, () => {
   return {
-    promotion: route.params.promotion,
+    threads: [route.params?.thread?.toUpperCase()],
     year: parseInt(route.params.year),
-    week: parseInt(route.params.week),
+    number: parseInt(route.params.week),
   }
 })
 
@@ -79,7 +79,7 @@ const LINES_ON_SUNDAY = 3
               (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) - 1
             )"
           class="relative leading-relaxed truncate border-b border-orange-700"
-          :class="{ 'pr-8': authStore.user?.admin }"
+          :class="{ 'pr-8': authStore.admin }"
         >
           <div
             class="inline-block w-4 h-4 mb-1 align-middle border border-orange-700 cursor-pointer"
@@ -91,18 +91,17 @@ const LINES_ON_SUNDAY = 3
           {{ types[task.type].emoji }}
           <span :title="task.title">{{ task.title }}</span>
           <button
-            v-if="authStore.user?.admin"
+            v-if="authStore.admin"
             @click="
               ;[
                 (popupStore.component = TaskForm),
                 (popupStore.additionalData = {
                   id: task.id,
                   date: task.date,
-                  promotion: route.params.promotion,
+                  threadId: task.thread.id,
                   type: task.type,
                   matterId: task.matter.id,
                   title: task.title,
-                  content: task.content,
                 }),
               ]
             "
@@ -134,7 +133,7 @@ const LINES_ON_SUNDAY = 3
             }}
           </span>
           <button
-            v-if="authStore.user?.admin"
+            v-if="authStore.admin"
             @click="
               ;[
                 (popupStore.component = TaskForm),

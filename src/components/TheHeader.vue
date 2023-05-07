@@ -49,7 +49,7 @@ const pageStore = usePageStore()
         :to="{
           name: 'Agenda',
           params: {
-            promotion: 'mtu1e',
+            thread: 'mtu1e',
             year: pageStore.now.year,
             week: pageStore.now.week,
           },

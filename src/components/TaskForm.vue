@@ -1,6 +1,6 @@
 <script setup>
 import { DELETE_TASK, MUTATE_TASK } from "@/api/mutations"
-import { GET_MATTERS, GET_WEEK } from "@/api/queries"
+import { GET_MATTERS_AND_THREADS, GET_WEEK } from "@/api/queries"
 import { usePopupStore } from "@/stores/popup"
 import { getWeekNumber } from "@/utils"
 import { useMutation, useQuery } from "@vue/apollo-composable"
@@ -10,16 +10,15 @@ const popupStore = usePopupStore()
 
 const task = ref({
   id: popupStore.additionalData.id || null,
+  threadId: popupStore.additionalData.threadId || null,
   date: popupStore.additionalData.date || "",
-  promotion: popupStore.additionalData.promotion || "mtu1e",
-  type: popupStore.additionalData.type || "homework",
   matterId: popupStore.additionalData.matterId || null,
+  type: popupStore.additionalData.type || "homework",
   title: popupStore.additionalData.title || "",
-  content: popupStore.additionalData.content || "",
 })
 const originalData = ref({ ...task.value })
 
-const { result } = useQuery(GET_MATTERS)
+const { result } = useQuery(GET_MATTERS_AND_THREADS)
 
 const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
   variables: task.value,
@@ -141,11 +140,13 @@ const resetInterval = () => {
 
     <label>Classe :</label>
     <select
-      v-model="task.promotion"
+      v-model="task.threadId"
       class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
     >
-      <option value="mtu1e">MTU1E</option>
+      <option v-for="thread in result?.threads || []" :value="thread.id">
+        {{ thread.code }}
+      </option>
     </select>
 
     <label>Type :</label>
@@ -157,7 +158,6 @@ const resetInterval = () => {
       <option value="homework">Devoir</option>
       <option value="test">Test</option>
       <option value="info">Information</option>
-      <option value="summary">Résumé de cours</option>
     </select>
 
     <label>Matière :</label>
@@ -175,14 +175,6 @@ const resetInterval = () => {
     <input
       type="text"
       v-model="task.title"
-      class="p-2 border rounded-sm"
-      @keyup.enter="mutate"
-    />
-
-    <label>Description :</label>
-    <input
-      type="text"
-      v-model="task.content"
       class="p-2 border rounded-sm"
       @keyup.enter="mutate"
     />

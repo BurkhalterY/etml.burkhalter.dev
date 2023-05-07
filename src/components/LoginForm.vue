@@ -24,8 +24,7 @@ const {
 
 onLoginDone((result) => {
   const data = result.data.login
-  authStore.token = data.token
-  authStore.user = data.user
+  localStorage.setItem("token", data.token)
   popupStore.component = false
 })
 </script>

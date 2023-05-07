@@ -1,42 +1,54 @@
 import gql from "graphql-tag"
 
 export const GET_WEEK = gql`
-  query getWeek($promotion: String!, $year: Int!, $week: Int!) {
-    week(promotion: $promotion, year: $year, number: $week) {
+  query getWeek(
+    $threads: [String!]
+    $includeSelf: Boolean
+    $year: Int!
+    $number: Int!
+  ) {
+    week(
+      threads: $threads
+      includeSelf: $includeSelf
+      year: $year
+      number: $number
+    ) {
       number
-      dateFrom
-      dateTo
       days {
         date
         tasks {
           id
-          date
-          promotion {
+          thread {
+            id
             code
           }
-          type
-          title
-          content
+          date
           matter {
             id
             shortName
           }
+          type
+          title
         }
       }
     }
   }
 `
 
-export const GET_MATTERS = gql`
+export const GET_MATTERS_AND_THREADS = gql`
   query getMatters {
     matters {
       id
       name
     }
+    threads {
+      id
+      code
+    }
   }
 `
 
-export const GET_GRADEBOOK = gql`
+/*export const GET_GRADEBOOK = gql`
   query getGradebook($promotion: String!) {
     gradebook(promotion: $promotion) {
       semesterAverage
@@ -72,16 +84,16 @@ export const GET_GRADEBOOK = gql`
       }
     }
   }
-`
+`*/
 
 export const GET_ME = gql`
   query getMe {
     me {
       id
-      email
       firstName
       lastName
       admin
+      isPublic
     }
   }
 `

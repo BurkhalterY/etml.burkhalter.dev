@@ -39,7 +39,8 @@ export const types = {
   summary: { emoji: "📓" },
 }
 
-const typesOrder = ["info", "test", "homework", "summary"]
+const typesOrder = ["info", "test", "homework"]
+// TODO: move that somewhere else
 const mattersOrder = [
   [],
   ["etml", "tib", "hispol", "ecdr", "fran", "mathfon", "angl"],

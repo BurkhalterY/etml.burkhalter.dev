@@ -41,7 +41,7 @@ export const usePageStore = defineStore("page", () => {
           router.push({
             name: "Schedule",
             params: {
-              promotion: "mtu1e",
+              thread: "mtu1e",
             },
           })
           break
@@ -49,7 +49,7 @@ export const usePageStore = defineStore("page", () => {
           router.push({
             name: "Agenda",
             params: {
-              promotion: "mtu1e",
+              thread: "mtu1e",
               year: now.value.year - (now.value.week <= 26),
               week: (pageNumber - 6) / 2 + 34,
             },
@@ -59,7 +59,7 @@ export const usePageStore = defineStore("page", () => {
           router.push({
             name: "Agenda",
             params: {
-              promotion: "mtu1e",
+              thread: "mtu1e",
               year: now.value.year - (now.value.week >= 34),
               week: pageNumber / 2 - 21,
             },

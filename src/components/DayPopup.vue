@@ -39,7 +39,7 @@ const route = useRoute()
         <td class="px-2 align-top" :colspan="task.matter.shortName ? 1 : 2">
           {{ types[task.type].emoji }} {{ task.title }}
         </td>
-        <td v-if="authStore.user?.admin" class="align-top">
+        <td v-if="authStore.admin" class="align-top">
           <button
             @click="
               ;[
@@ -47,11 +47,10 @@ const route = useRoute()
                 (popupStore.additionalData = {
                   id: task.id,
                   date: task.date,
-                  promotion: route.params.promotion,
+                  threadId: task.thread.id,
                   type: task.type,
-                  matter: task.matter.abbr,
+                  matterId: task.matter.id,
                   title: task.title,
-                  content: task.content,
                 }),
               ]
             "

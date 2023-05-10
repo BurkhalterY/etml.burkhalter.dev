@@ -13,10 +13,11 @@ const pageStore = usePageStore()
     <div
       class="max-w-xl mx-auto mt-24 mb-8 overflow-hidden bg-white sm:mt-18 xl:max-w-6xl drop-shadow-lg page"
     >
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component, route }">
         <transition mode="out-in">
           <component
             :is="Component"
+            :key="route.path"
             class="px-16 pt-12 pb-20 min-h-[800px] xl:h-[800px]"
           />
         </transition>

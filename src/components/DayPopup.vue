@@ -44,14 +44,7 @@ const route = useRoute()
             @click="
               ;[
                 (popupStore.component = TaskForm),
-                (popupStore.additionalData = {
-                  id: task.id,
-                  date: task.date,
-                  threadId: task.thread.id,
-                  type: task.type,
-                  matterId: task.matter.id,
-                  title: task.title,
-                }),
+                (popupStore.additionalData = task),
               ]
             "
             class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml"

@@ -13,10 +13,11 @@ const authStore = useAuthStore()
 const popupStore = usePopupStore()
 
 const { result } = useQuery(GET_WEEK, () => {
+  const thread = route.params?.thread
   return {
-    threads: [route.params?.thread?.toUpperCase()],
+    threads: thread == "my" ? null : [thread?.toUpperCase()],
     year: parseInt(route.params.year),
-    number: parseInt(route.params.week),
+    number: parseInt(route.params.number),
   }
 })
 
@@ -28,7 +29,7 @@ const LINES_ON_SUNDAY = 3
   <div class="flex flex-col flex-wrap gap-y-4 gap-x-16">
     <div class="w-full xl:w-1/2 xl:pr-16">
       <h1 class="text-2xl font-light border-b border-black">
-        Semaine {{ route.params.week }}
+        Semaine {{ route.params.number }}
         <span class="float-right">{{ route.params.year }}</span>
       </h1>
       <div class="w-full border-b border-orange-700">
@@ -41,9 +42,11 @@ const LINES_ON_SUNDAY = 3
     </div>
     <div
       class="w-full xl:w-1/2 xl:pr-16"
-      v-for="(day, i) in result?.week?.days?.map((day) => {
-        return { ...day, strDate: day.date, date: new Date(day.date) }
-      }) || []"
+      v-for="(day, i) in result?.week?.days?.map((day) => ({
+        ...day,
+        strDate: day.date,
+        date: new Date(day.date),
+      })) || []"
     >
       <h2
         class="px-1 text-white bg-orange-700"
@@ -95,14 +98,7 @@ const LINES_ON_SUNDAY = 3
             @click="
               ;[
                 (popupStore.component = TaskForm),
-                (popupStore.additionalData = {
-                  id: task.id,
-                  date: task.date,
-                  threadId: task.thread.id,
-                  type: task.type,
-                  matterId: task.matter.id,
-                  title: task.title,
-                }),
+                (popupStore.additionalData = task),
               ]
             "
             class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml absolute right-0 my-1"

@@ -17,7 +17,7 @@ const routes = [
     component: () => import("@/views/SchedulePage.vue"),
   },
   {
-    path: "/agenda/:thread/:year/:week",
+    path: "/agenda/:thread/:year/:number",
     name: "Agenda",
     component: () => import("@/views/AgendaPage.vue"),
   },

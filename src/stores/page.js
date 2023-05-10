@@ -7,7 +7,7 @@ export const usePageStore = defineStore("page", () => {
   const route = useRoute()
   const router = useRouter()
 
-  const now = ref(getWeekNumber(new Date(Date.now() + 3600 * 24000))) // jump directly to the next week when it is the weekend
+  const now = ref(getWeekNumber(new Date(Date.now() + 86400000))) // jump directly to the next week when it is the weekend
 
   const pageLeft = computed({
     get() {
@@ -19,9 +19,9 @@ export const usePageStore = defineStore("page", () => {
         case "Schedule":
           return 4
         case "Agenda":
-          return route.params.week >= 34
-            ? (route.params.week - 34) * 2 + 6
-            : route.params.week * 2 + 42
+          return route.params.number >= 34
+            ? (route.params.number - 34) * 2 + 6
+            : route.params.number * 2 + 42
         case "Gradebook":
           return 96
         case "WIP":
@@ -41,7 +41,7 @@ export const usePageStore = defineStore("page", () => {
           router.push({
             name: "Schedule",
             params: {
-              thread: "mtu1e",
+              thread: "my",
             },
           })
           break
@@ -49,9 +49,9 @@ export const usePageStore = defineStore("page", () => {
           router.push({
             name: "Agenda",
             params: {
-              thread: "mtu1e",
-              year: now.value.year - (now.value.week <= 26),
-              week: (pageNumber - 6) / 2 + 34,
+              thread: "my",
+              year: now.value.year - (now.value.number <= 26),
+              number: (pageNumber - 6) / 2 + 34,
             },
           })
           break
@@ -59,9 +59,9 @@ export const usePageStore = defineStore("page", () => {
           router.push({
             name: "Agenda",
             params: {
-              thread: "mtu1e",
-              year: now.value.year - (now.value.week >= 34),
-              week: pageNumber / 2 - 21,
+              thread: "my",
+              year: now.value.year - (now.value.number >= 34),
+              number: pageNumber / 2 - 21,
             },
           })
           break

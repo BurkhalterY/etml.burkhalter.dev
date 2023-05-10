@@ -49,9 +49,9 @@ const pageStore = usePageStore()
         :to="{
           name: 'Agenda',
           params: {
-            thread: 'mtu1e',
+            thread: 'my',
             year: pageStore.now.year,
-            week: pageStore.now.week,
+            number: pageStore.now.number,
           },
         }"
         class="px-2 border-r"

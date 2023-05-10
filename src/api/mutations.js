@@ -44,7 +44,13 @@ export const MUTATE_TASK = gql`
       id: $id
     ) {
       id
+      threadId
+      thread {
+        id
+        code
+      }
       date
+      matterId
       matter {
         id
         shortName
@@ -54,7 +60,6 @@ export const MUTATE_TASK = gql`
     }
   }
 `
-
 export const DELETE_TASK = gql`
   mutation deleteTask($id: Int!) {
     deleteTask(id: $id)

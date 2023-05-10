@@ -8,14 +8,7 @@ import { ref } from "vue"
 
 const popupStore = usePopupStore()
 
-const task = ref({
-  id: popupStore.additionalData.id || null,
-  threadId: popupStore.additionalData.threadId || null,
-  date: popupStore.additionalData.date || "",
-  matterId: popupStore.additionalData.matterId || null,
-  type: popupStore.additionalData.type || "homework",
-  title: popupStore.additionalData.title || "",
-})
+const task = ref({ ...popupStore.additionalData })
 const originalData = ref({ ...task.value })
 
 const { result } = useQuery(GET_MATTERS_AND_THREADS)
@@ -26,14 +19,14 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
     if (originalData.value.id) {
       const date = new Date(originalData.value.date)
       const day = (date.getDay() + 6) % 7
-      const { year, week } = getWeekNumber(date)
+      const { year, number } = getWeekNumber(date)
 
       const QUERY = {
         query: GET_WEEK,
         variables: {
-          promotion: originalData.value.promotion,
+          threads: null,
           year: year,
-          week: week,
+          number: number,
         },
       }
 
@@ -47,14 +40,14 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
 
     const date = new Date(task.date)
     const day = (date.getDay() + 6) % 7
-    const { year, week } = getWeekNumber(date)
+    const { year, number } = getWeekNumber(date)
 
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        promotion: task.promotion,
+        threads: null,
         year: year,
-        week: week,
+        number: number,
       },
     }
     const cachedData = cache.readQuery(QUERY)
@@ -79,14 +72,14 @@ const {
   update: (cache) => {
     const date = new Date(originalData.value.date)
     const day = (date.getDay() + 6) % 7
-    const { year, week } = getWeekNumber(date)
+    const { year, number } = getWeekNumber(date)
 
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        promotion: originalData.value.promotion,
+        threads: null,
         year: year,
-        week: week,
+        number: number,
       },
     }
 

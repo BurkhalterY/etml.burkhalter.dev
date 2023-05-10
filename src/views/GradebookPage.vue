@@ -3,11 +3,11 @@ import { GET_GRADEBOOK } from "@/api/queries"
 import { useQuery } from "@vue/apollo-composable"
 import { computed, ref } from "vue"
 
-const promotion = ref("mtu1e")
+const promotion = ref("my")
 
-const { result, loading } = useQuery(GET_GRADEBOOK, () => {
-  return { promotion: promotion.value }
-})
+const { result, loading } = useQuery(GET_GRADEBOOK, () => ({
+  promotion: promotion.value,
+}))
 
 const currentAverageDef = ref(null)
 const currentAverageVol = ref(null)
@@ -37,13 +37,11 @@ const GRADES_BY_MATTER_BY_SEMESTER = 5
             </th>
             <td
               class="w-12 h-12 text-center border border-black"
-              v-for="grade in average.grades.map((grade) => {
-                return {
-                  ...grade,
-                  strDate: grade.date,
-                  date: new Date(grade.date),
-                }
-              })"
+              v-for="grade in average.grades.map((grade) => ({
+                ...grade,
+                strDate: grade.date,
+                date: new Date(grade.date),
+              }))"
             >
               <div class="text-xs">
                 {{
@@ -91,13 +89,11 @@ const GRADES_BY_MATTER_BY_SEMESTER = 5
               </th>
             </tr>
             <tr
-              v-for="grade in currentAverage.grades.map((grade) => {
-                return {
-                  ...grade,
-                  strDate: grade.date,
-                  date: new Date(grade.date),
-                }
-              })"
+              v-for="grade in currentAverage.grades.map((grade) => ({
+                ...grade,
+                strDate: grade.date,
+                date: new Date(grade.date),
+              }))"
             >
               <td class="px-2 border border-black">
                 {{ grade.test.title }}

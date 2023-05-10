@@ -1,28 +1,20 @@
 import gql from "graphql-tag"
 
 export const GET_WEEK = gql`
-  query getWeek(
-    $threads: [String!]
-    $includeSelf: Boolean
-    $year: Int!
-    $number: Int!
-  ) {
-    week(
-      threads: $threads
-      includeSelf: $includeSelf
-      year: $year
-      number: $number
-    ) {
+  query getWeek($threads: [String!], $year: Int!, $number: Int!) {
+    week(threads: $threads, year: $year, number: $number) {
       number
       days {
         date
         tasks {
           id
+          threadId
           thread {
             id
             code
           }
           date
+          matterId
           matter {
             id
             shortName

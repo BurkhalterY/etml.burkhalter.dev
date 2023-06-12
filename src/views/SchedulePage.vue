@@ -8,7 +8,7 @@ const monday = [
   },
   {
     start: "08:50",
-    end: "08:95",
+    end: "09:35",
     matter: "Histoire",
     classroom: "S312",
   },
@@ -71,7 +71,7 @@ const friday = [
   },
   {
     start: "08:50",
-    end: "08:95",
+    end: "09:35",
     matter: "Français",
     classroom: "S312",
   },

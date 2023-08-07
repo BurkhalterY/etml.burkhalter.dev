@@ -8,6 +8,7 @@ export const usePageStore = defineStore("page", () => {
   const router = useRouter()
 
   const now = ref(getWeekNumber(new Date(Date.now() + 86400000))) // jump directly to the next week when it is the weekend
+  const year = ref(now.value.year)
 
   const pageLeft = computed({
     get() {
@@ -84,5 +85,5 @@ export const usePageStore = defineStore("page", () => {
     },
   })
 
-  return { pageLeft, pageRight, now }
+  return { pageLeft, pageRight, year, now }
 })

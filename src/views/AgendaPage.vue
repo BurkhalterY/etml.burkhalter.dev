@@ -4,22 +4,29 @@ import DayPopup from "@/components/DayPopup.vue"
 import TaskForm from "@/components/TaskForm.vue"
 import { useAuthStore } from "@/stores/auth"
 import { usePopupStore } from "@/stores/popup"
-import { days, months, tasksSorter, types } from "@/utils"
+import { days, getYear, months, tasksSorter, types } from "@/utils"
 import { useQuery } from "@vue/apollo-composable"
-import { useRoute } from "vue-router"
+import { computed } from "vue"
+import { useRoute, useRouter } from "vue-router"
 
 const route = useRoute()
+const router = useRouter()
 const authStore = useAuthStore()
 const popupStore = usePopupStore()
 
-const { result } = useQuery(GET_WEEK, () => {
-  const thread = route.params?.thread
-  return {
-    threads: thread == "my" ? null : [thread?.toUpperCase()],
-    year: parseInt(route.params.year),
-    number: parseInt(route.params.number),
-  }
+const week = computed(() => {
+  const w = parseInt(route.params.week)
+  if (w > 26 && w < 34)
+    router.push({ name: route.name, params: { ...route.params, week: 34 } })
+  return w
 })
+const year = computed(() => getYear(route.params.promotion, week.value))
+
+const { result } = useQuery(GET_WEEK, () => ({
+  promotion: route.params.promotion,
+  year: year.value,
+  week: week.value,
+}))
 
 const LINES_PER_DAY = 5
 const LINES_ON_SUNDAY = 3
@@ -29,8 +36,8 @@ const LINES_ON_SUNDAY = 3
   <div class="flex flex-col flex-wrap gap-y-4 gap-x-16">
     <div class="w-full xl:w-1/2 xl:pr-16">
       <h1 class="text-2xl font-light border-b border-black">
-        Semaine {{ route.params.number }}
-        <span class="float-right">{{ route.params.year }}</span>
+        Semaine {{ week }}
+        <span class="float-right">{{ year }}</span>
       </h1>
       <div class="w-full border-b border-orange-700">
         <h2 class="inline font-bold text-orange-700 uppercase text-2xs">
@@ -89,7 +96,11 @@ const LINES_ON_SUNDAY = 3
           />
           {{}}
           <strong v-if="task.matter.shortName" class="inline-block w-20">
-            {{ task.matter.shortName }}
+            {{
+              task.matter.abbr == "ecdr" && route.params.promotion == "mtu2e"
+                ? "Droit"
+                : task.matter.shortName
+            }}
           </strong>
           {{ types[task.type].emoji }}
           <span :title="task.title">{{ task.title }}</span>
@@ -103,7 +114,7 @@ const LINES_ON_SUNDAY = 3
             "
             class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml absolute right-0 my-1"
           >
-            Edit
+            Éditer
           </button>
         </li>
         <li class="leading-relaxed border-b border-orange-700">
@@ -133,7 +144,13 @@ const LINES_ON_SUNDAY = 3
             @click="
               ;[
                 (popupStore.component = TaskForm),
-                (popupStore.additionalData = { date: day.strDate }),
+                (popupStore.additionalData = {
+                  date: day.strDate,
+                  promotion: 'mtu2e',
+                  matter: '',
+                  type: 'homework',
+                  title: '',
+                }),
               ]
             "
             class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml"

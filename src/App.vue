@@ -11,7 +11,7 @@ const pageStore = usePageStore()
   <div>
     <TheHeader />
     <div
-      class="max-w-xl mx-auto mt-12 mb-8 overflow-hidden bg-white xl:max-w-6xl drop-shadow-lg page"
+      class="max-w-xl mx-auto mt-20 mb-8 overflow-hidden bg-white xl:max-w-6xl drop-shadow-lg page"
     >
       <router-view v-slot="{ Component, route }">
         <transition mode="out-in">

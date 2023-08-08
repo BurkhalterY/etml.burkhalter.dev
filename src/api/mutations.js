@@ -28,31 +28,26 @@ export const REGISTER = gql`
 
 export const MUTATE_TASK = gql`
   mutation mutateTask(
-    $threadId: Int!
     $date: Date!
-    $matterId: Int!
+    $promotion: String!
+    $matter: String!
     $type: String!
     $title: String!
     $id: Int
   ) {
     task(
-      threadId: $threadId
       date: $date
-      matterId: $matterId
+      promotion: $promotion
+      matter: $matter
       type: $type
       title: $title
       id: $id
     ) {
       id
-      threadId
-      thread {
-        id
-        code
-      }
       date
-      matterId
+      promotion
       matter {
-        id
+        abbr
         shortName
       }
       type

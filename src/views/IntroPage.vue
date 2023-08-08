@@ -1,6 +1,5 @@
 <script setup>
 import { GET_ME } from "@/api/queries"
-import InformationPopup from "@/components/InformationPopup.vue"
 import LoginForm from "@/components/LoginForm.vue"
 import RegisterForm from "@/components/RegisterForm.vue"
 import { usePopupStore } from "@/stores/popup"
@@ -10,13 +9,7 @@ const popupStore = usePopupStore()
 
 const { load, result } = useLazyQuery(GET_ME)
 
-if (localStorage.hasOwnProperty("token")) {
-  load()
-}
-
-const title = "Pourquoi se créer un compte ?"
-const content =
-  "En vous créant un compte gratuitement sur etml.burkhalter.dev, vous accèdez aux fonctionnalités privées telles que le calculateur de moyenne et d'autres prochainement. Vous ne recevrez aucun e-mail suite à cette inscription."
+if (localStorage.hasOwnProperty("token")) load()
 </script>
 
 <template>
@@ -30,7 +23,11 @@ const content =
         <hr class="my-8 border-etml" />
         <div class="flex flex-col gap-2 text-sm">
           <ul>
-            <li class="cursor-pointer hover:underline">etml.burkhalter.dev</li>
+            <li>
+              <a href="https://etml.burkhalter.dev/" class="hover:underline"
+                >etml.burkhalter.dev</a
+              >
+            </li>
             <li>Codé avec 💙 par votre délégué Yannis Burkhalter</li>
           </ul>
           <ul>
@@ -40,7 +37,16 @@ const content =
                 yannis@burkhalter.dev
               </a>
             </li>
-            <li>Discord : aestetica#9521</li>
+            <li>
+              Discord :
+              <a
+                target="_blank"
+                href="https://discord.com/users/317230160124313610"
+                class="hover:underline"
+              >
+                aestetica
+              </a>
+            </li>
             <li>
               <a
                 href="https://github.com/BurkhalterY/etml.burkhalter.dev"
@@ -61,7 +67,7 @@ const content =
             </li>
           </ul>
           <ul>
-            <li>&copy; 2023 Burkhalter Yannis</li>
+            <li>&copy; 2023 Yannis Burkhalter</li>
             <li>
               Le logo et les images appartiennent à
               <a
@@ -129,29 +135,18 @@ const content =
       >
         <div class="flex gap-2">
           <button
-            class="p-2 text-white rounded bg-etml hover:bg-blue-500"
+            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
             @click="popupStore.component = LoginForm"
           >
             Connexion
           </button>
           <button
-            class="p-2 text-white rounded bg-etml hover:bg-blue-500"
+            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
             @click="popupStore.component = RegisterForm"
           >
             Inscription
           </button>
         </div>
-        <span
-          class="cursor-pointer"
-          @click="
-            ;[
-              (popupStore.component = InformationPopup),
-              (popupStore.additionalData = { title, content }),
-            ]
-          "
-        >
-          Découvrir pourquoi se créer un compte ?
-        </span>
       </div>
     </div>
   </div>

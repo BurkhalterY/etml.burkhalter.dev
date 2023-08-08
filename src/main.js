@@ -14,9 +14,7 @@ const httpLink = createHttpLink({
   uri: import.meta.env.VITE_API_URL,
   fetch: (uri, options) => {
     const token = localStorage.getItem("token")
-    if (token) {
-      options.headers["Authorization"] = token
-    }
+    if (token) options.headers["Authorization"] = token
     return fetch(uri, options)
   },
 })

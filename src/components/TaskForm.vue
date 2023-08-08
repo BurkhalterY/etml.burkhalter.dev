@@ -1,32 +1,35 @@
 <script setup>
 import { DELETE_TASK, MUTATE_TASK } from "@/api/mutations"
-import { GET_MATTERS_AND_THREADS, GET_WEEK } from "@/api/queries"
+import { GET_MATTERS, GET_WEEK } from "@/api/queries"
 import { usePopupStore } from "@/stores/popup"
 import { getWeekNumber } from "@/utils"
 import { useMutation, useQuery } from "@vue/apollo-composable"
 import { ref } from "vue"
+import { useRoute } from "vue-router"
 
+const route = useRoute()
 const popupStore = usePopupStore()
 
 const task = ref({ ...popupStore.additionalData })
+const matter = ref(task.value.matter?.abbr ?? "")
 const originalData = ref({ ...task.value })
 
-const { result } = useQuery(GET_MATTERS_AND_THREADS)
+const { result } = useQuery(GET_MATTERS)
 
 const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
-  variables: task.value,
+  variables: { ...task.value, matter: matter.value },
   update: (cache, { data: { task } }) => {
     if (originalData.value.id) {
       const date = new Date(originalData.value.date)
       const day = (date.getDay() + 6) % 7
-      const { year, number } = getWeekNumber(date)
+      const { year, week } = getWeekNumber(date)
 
       const QUERY = {
         query: GET_WEEK,
         variables: {
-          threads: null,
+          promotion: route.params.promotion,
           year: year,
-          number: number,
+          week: week,
         },
       }
 
@@ -40,16 +43,17 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
 
     const date = new Date(task.date)
     const day = (date.getDay() + 6) % 7
-    const { year, number } = getWeekNumber(date)
+    const { year, week } = getWeekNumber(date)
 
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        threads: null,
+        promotion: route.params.promotion,
         year: year,
-        number: number,
+        week: week,
       },
     }
+
     const cachedData = cache.readQuery(QUERY)
     if (cachedData) {
       const newData = JSON.parse(JSON.stringify(cachedData))
@@ -72,14 +76,14 @@ const {
   update: (cache) => {
     const date = new Date(originalData.value.date)
     const day = (date.getDay() + 6) % 7
-    const { year, number } = getWeekNumber(date)
+    const { year, week } = getWeekNumber(date)
 
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        threads: null,
+        promotion: route.params.promotion,
         year: year,
-        number: number,
+        week: week,
       },
     }
 
@@ -133,13 +137,12 @@ const resetInterval = () => {
 
     <label>Classe :</label>
     <select
-      v-model="task.threadId"
+      v-model="task.promotion"
       class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
     >
-      <option v-for="thread in result?.threads || []" :value="thread.id">
-        {{ thread.code }}
-      </option>
+      <option value="mtu1e">MTU1E</option>
+      <option value="mtu2e">MTU2E</option>
     </select>
 
     <label>Type :</label>
@@ -155,16 +158,16 @@ const resetInterval = () => {
 
     <label>Matière :</label>
     <select
-      v-model="task.matterId"
+      v-model="matter"
       class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
     >
-      <option v-for="matter in result?.matters || []" :value="matter.id">
+      <option v-for="matter in result?.matters || []" :value="matter.abbr">
         {{ matter.name }}
       </option>
     </select>
 
-    <label>Title :</label>
+    <label>Titre :</label>
     <input
       type="text"
       v-model="task.title"

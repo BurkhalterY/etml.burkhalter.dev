@@ -27,8 +27,7 @@ const {
 }))
 
 onRegisterDone((result) => {
-  const data = result.data.register
-  localStorage.setItem("token", data.token)
+  authStore.login(result.data.register.token)
   popupStore.component = false
 })
 </script>

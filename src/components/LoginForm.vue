@@ -23,8 +23,7 @@ const {
 }))
 
 onLoginDone((result) => {
-  const data = result.data.login
-  localStorage.setItem("token", data.token)
+  authStore.login(result.data.login.token)
   popupStore.component = false
 })
 </script>

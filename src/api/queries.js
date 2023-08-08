@@ -1,22 +1,17 @@
 import gql from "graphql-tag"
 
 export const GET_WEEK = gql`
-  query getWeek($threads: [String!], $year: Int!, $number: Int!) {
-    week(threads: $threads, year: $year, number: $number) {
+  query getWeek($promotion: String!, $year: Int!, $week: Int!) {
+    week(promotion: $promotion, year: $year, number: $week) {
       number
       days {
         date
         tasks {
           id
-          threadId
-          thread {
-            id
-            code
-          }
+          promotion
           date
-          matterId
           matter {
-            id
+            abbr
             shortName
           }
           type
@@ -27,56 +22,14 @@ export const GET_WEEK = gql`
   }
 `
 
-export const GET_MATTERS_AND_THREADS = gql`
+export const GET_MATTERS = gql`
   query getMatters {
     matters {
-      id
+      abbr
       name
-    }
-    threads {
-      id
-      code
     }
   }
 `
-
-/*export const GET_GRADEBOOK = gql`
-  query getGradebook($promotion: String!) {
-    gradebook(promotion: $promotion) {
-      semesterAverage
-      sub4Matters
-      negativePoints
-      success
-      averages {
-        value
-        matter {
-          id
-          abbr
-          name
-        }
-        grades {
-          id
-          value
-          date
-          test {
-            id
-            title
-            content
-          }
-        }
-      }
-    }
-    tests(promotion: $promotion) {
-      id
-      title
-      content
-      matter {
-        id
-        abbr
-      }
-    }
-  }
-`*/
 
 export const GET_ME = gql`
   query getMe {
@@ -85,7 +38,6 @@ export const GET_ME = gql`
       firstName
       lastName
       admin
-      isPublic
     }
   }
 `

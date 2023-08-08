@@ -7,9 +7,14 @@ export const useAuthStore = defineStore("auth", () => {
   const logged = ref(false)
   const admin = ref(false)
 
-  const { load, result, loading, error } = useLazyQuery(GET_ME)
+  const { load, result, loading, error } = useLazyQuery(GET_ME, null, {
+    fetchPolicy: "network-only",
+  })
 
-  if (localStorage.hasOwnProperty("token")) {
+  if (localStorage.hasOwnProperty("token")) load()
+
+  const login = (token) => {
+    localStorage.setItem("token", token)
     load()
   }
 
@@ -20,5 +25,5 @@ export const useAuthStore = defineStore("auth", () => {
     }
   })
 
-  return { admin }
+  return { admin, login }
 })

@@ -1,3 +1,18 @@
+<script setup>
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+const startYear = computed(
+  () =>
+    ({
+      mtu1e: 2022,
+      mtu2e: 2023,
+    }[route.params.promotion])
+)
+const endYear = computed(() => startYear.value + 1)
+</script>
+
 <template>
   <div
     class="px-12 pt-12 text-white bg-right-bottom bg-cover"
@@ -11,7 +26,7 @@
     <h1
       class="absolute right-0 w-full text-6xl font-thin text-center xl:pl-1 xl:w-1/2 bottom-24"
     >
-      Agenda 2022-2023
+      Agenda {{ startYear }}-{{ endYear }}
     </h1>
   </div>
 </template>

@@ -1,28 +1,29 @@
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
+  { path: "/", redirect: "/mtu2e" },
   {
-    path: "/",
+    path: "/:promotion",
     name: "Cover",
     component: () => import("@/views/CoverPage.vue"),
   },
   {
-    path: "/intro",
+    path: "/:promotion/intro",
     name: "Intro",
     component: () => import("@/views/IntroPage.vue"),
   },
   {
-    path: "/schedule/:promotion",
+    path: "/:promotion/schedule",
     name: "Schedule",
     component: () => import("@/views/SchedulePage.vue"),
   },
   {
-    path: "/agenda/:promotion/:year/:week",
+    path: "/:promotion/agenda/:week",
     name: "Agenda",
     component: () => import("@/views/AgendaPage.vue"),
   },
   {
-    path: "/wip",
+    path: "/:promotion/wip",
     name: "WIP",
     component: () => import("@/views/WipPage.vue"),
   },

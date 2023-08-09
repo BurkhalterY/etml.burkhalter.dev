@@ -14,9 +14,7 @@ const httpLink = createHttpLink({
   uri: import.meta.env.VITE_API_URL,
   fetch: (uri, options) => {
     const token = localStorage.getItem("token")
-    if (token) {
-      options.headers["Authorization"] = token
-    }
+    if (token) options.headers["Authorization"] = token
     return fetch(uri, options)
   },
 })
@@ -39,15 +37,12 @@ createApp({
 const scalars = {
   Date: {
     parseValue: (value) => {
-      console.log(value)
       return new Date(value)
     },
     parseLiteral: (value) => {
-      console.log(value)
       return new Date(value)
     },
     serialize: (value) => {
-      console.log(value)
       return value.toISOString()
     },
   },

@@ -4,21 +4,18 @@ export const GET_WEEK = gql`
   query getWeek($promotion: String!, $year: Int!, $week: Int!) {
     week(promotion: $promotion, year: $year, number: $week) {
       number
-      dateFrom
-      dateTo
       days {
         date
         tasks {
           id
-          date
           promotion
-          type
-          title
-          content
+          date
           matter {
             abbr
             shortName
           }
+          type
+          title
         }
       }
     }
@@ -38,7 +35,6 @@ export const GET_ME = gql`
   query getMe {
     me {
       id
-      email
       firstName
       lastName
       admin

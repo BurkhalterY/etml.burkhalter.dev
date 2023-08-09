@@ -11,12 +11,13 @@ const pageStore = usePageStore()
   <div>
     <TheHeader />
     <div
-      class="max-w-xl mx-auto mt-24 mb-8 overflow-hidden bg-white sm:mt-18 xl:max-w-6xl drop-shadow-lg page"
+      class="max-w-xl mx-auto mt-20 mb-8 overflow-hidden bg-white xl:max-w-6xl drop-shadow-lg page"
     >
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component, route }">
         <transition mode="out-in">
           <component
             :is="Component"
+            :key="route.path"
             class="px-16 pt-12 pb-20 min-h-[800px] xl:h-[800px]"
           />
         </transition>
@@ -38,7 +39,7 @@ const pageStore = usePageStore()
       />
     </div>
     <div
-      class="absolute hidden xl:block top-0 w-16 pt-6 mt-24 sm:mt-18 -translate-x-1/2 left-1/2 right-1/2 h-[775px]"
+      class="absolute hidden xl:block top-0 w-16 pt-6 mt-24 sm:mt-20 -translate-x-1/2 left-1/2 right-1/2 h-[775px]"
     >
       <div
         class="w-full h-full bg-repeat-y bg-contain bg-origin-content bg-clip-content"

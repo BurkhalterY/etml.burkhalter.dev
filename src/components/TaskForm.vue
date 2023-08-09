@@ -5,24 +5,19 @@ import { usePopupStore } from "@/stores/popup"
 import { getWeekNumber } from "@/utils"
 import { useMutation, useQuery } from "@vue/apollo-composable"
 import { ref } from "vue"
+import { useRoute } from "vue-router"
 
+const route = useRoute()
 const popupStore = usePopupStore()
 
-const task = ref({
-  id: popupStore.additionalData.id || null,
-  date: popupStore.additionalData.date || "",
-  promotion: popupStore.additionalData.promotion || "mtu1e",
-  type: popupStore.additionalData.type || "homework",
-  matter: popupStore.additionalData.matter || "",
-  title: popupStore.additionalData.title || "",
-  content: popupStore.additionalData.content || "",
-})
+const task = ref({ ...popupStore.additionalData })
+const matter = ref(task.value.matter?.abbr ?? "")
 const originalData = ref({ ...task.value })
 
 const { result } = useQuery(GET_MATTERS)
 
 const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
-  variables: task.value,
+  variables: { ...task.value, matter: matter.value },
   update: (cache, { data: { task } }) => {
     if (originalData.value.id) {
       const date = new Date(originalData.value.date)
@@ -32,7 +27,7 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
       const QUERY = {
         query: GET_WEEK,
         variables: {
-          promotion: originalData.value.promotion,
+          promotion: route.params.promotion,
           year: year,
           week: week,
         },
@@ -53,11 +48,12 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        promotion: task.promotion,
+        promotion: route.params.promotion,
         year: year,
         week: week,
       },
     }
+
     const cachedData = cache.readQuery(QUERY)
     if (cachedData) {
       const newData = JSON.parse(JSON.stringify(cachedData))
@@ -85,7 +81,7 @@ const {
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        promotion: originalData.value.promotion,
+        promotion: route.params.promotion,
         year: year,
         week: week,
       },
@@ -146,6 +142,7 @@ const resetInterval = () => {
       @keyup.enter="mutate"
     >
       <option value="mtu1e">MTU1E</option>
+      <option value="mtu2e">MTU2E</option>
     </select>
 
     <label>Type :</label>
@@ -157,12 +154,11 @@ const resetInterval = () => {
       <option value="homework">Devoir</option>
       <option value="test">Test</option>
       <option value="info">Information</option>
-      <option value="summary">Résumé de cours</option>
     </select>
 
     <label>Matière :</label>
     <select
-      v-model="task.matter"
+      v-model="matter"
       class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
     >
@@ -171,18 +167,10 @@ const resetInterval = () => {
       </option>
     </select>
 
-    <label>Title :</label>
+    <label>Titre :</label>
     <input
       type="text"
       v-model="task.title"
-      class="p-2 border rounded-sm"
-      @keyup.enter="mutate"
-    />
-
-    <label>Description :</label>
-    <input
-      type="text"
-      v-model="task.content"
       class="p-2 border rounded-sm"
       @keyup.enter="mutate"
     />

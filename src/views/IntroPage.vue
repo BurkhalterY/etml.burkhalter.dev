@@ -1,16 +1,15 @@
 <script setup>
-import InformationPopup from "@/components/InformationPopup.vue"
+import { GET_ME } from "@/api/queries"
 import LoginForm from "@/components/LoginForm.vue"
 import RegisterForm from "@/components/RegisterForm.vue"
-import { useAuthStore } from "@/stores/auth"
 import { usePopupStore } from "@/stores/popup"
+import { useLazyQuery } from "@vue/apollo-composable"
 
-const authStore = useAuthStore()
 const popupStore = usePopupStore()
 
-const title = "Pourquoi se créer un compte ?"
-const content =
-  "En vous créant un compte gratuitement sur etml.burkhalter.dev, vous accèdez aux fonctionnalités privées telles que le calculateur de moyenne et d'autres prochainement. Vous ne recevrez aucun e-mail suite à cette inscription."
+const { load, result } = useLazyQuery(GET_ME)
+
+if (localStorage.hasOwnProperty("token")) load()
 </script>
 
 <template>
@@ -24,7 +23,11 @@ const content =
         <hr class="my-8 border-etml" />
         <div class="flex flex-col gap-2 text-sm">
           <ul>
-            <li class="cursor-pointer hover:underline">etml.burkhalter.dev</li>
+            <li>
+              <a href="https://etml.burkhalter.dev/" class="hover:underline"
+                >etml.burkhalter.dev</a
+              >
+            </li>
             <li>Codé avec 💙 par votre délégué Yannis Burkhalter</li>
           </ul>
           <ul>
@@ -34,7 +37,16 @@ const content =
                 yannis@burkhalter.dev
               </a>
             </li>
-            <li>Discord : aestetica#9521</li>
+            <li>
+              Discord :
+              <a
+                target="_blank"
+                href="https://discord.com/users/317230160124313610"
+                class="hover:underline"
+              >
+                aestetica
+              </a>
+            </li>
             <li>
               <a
                 href="https://github.com/BurkhalterY/etml.burkhalter.dev"
@@ -55,7 +67,7 @@ const content =
             </li>
           </ul>
           <ul>
-            <li>&copy; 2023 Burkhalter Yannis</li>
+            <li>&copy; 2023 Yannis Burkhalter</li>
             <li>
               Le logo et les images appartiennent à
               <a
@@ -74,21 +86,21 @@ const content =
     <div class="relative flex-grow">
       <div
         class="flex flex-col h-full gap-6 p-2 -m-2 duration-300 ease-linear rounded"
-        :class="{ 'bg-slate-200 blur-sm grayscale': !authStore.user }"
+        :class="{ 'bg-slate-200 blur-sm grayscale': !result?.me }"
       >
         <div class="flex items-end gap-1">
           <label>Prénom :</label>
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            :value="authStore.user?.firstName"
+            :value="result?.me.firstName"
             readonly
           />
           <label>Nom :</label>
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            :value="authStore.user?.lastName"
+            :value="result?.me.lastName"
             readonly
           />
         </div>
@@ -97,7 +109,7 @@ const content =
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            :value="authStore.user?.email"
+            :value="result?.me.email"
             readonly
           />
         </div>
@@ -118,34 +130,23 @@ const content =
         ></textarea>
       </div>
       <div
-        v-if="!authStore.user"
+        v-if="!result?.me"
         class="absolute top-0 flex flex-col items-center justify-center w-full h-full gap-2"
       >
         <div class="flex gap-2">
           <button
-            class="p-2 text-white rounded bg-etml hover:bg-blue-500"
+            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
             @click="popupStore.component = LoginForm"
           >
             Connexion
           </button>
           <button
-            class="p-2 text-white rounded bg-etml hover:bg-blue-500"
+            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
             @click="popupStore.component = RegisterForm"
           >
             Inscription
           </button>
         </div>
-        <span
-          class="cursor-pointer"
-          @click="
-            ;[
-              (popupStore.component = InformationPopup),
-              (popupStore.additionalData = { title, content }),
-            ]
-          "
-        >
-          Découvrir pourquoi se créer un compte ?
-        </span>
       </div>
     </div>
   </div>

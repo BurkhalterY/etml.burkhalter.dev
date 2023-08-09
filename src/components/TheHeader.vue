@@ -1,64 +1,97 @@
 <script setup>
 import { usePageStore } from "@/stores/page"
+import { now } from "@/utils"
+import {
+  BackwardIcon,
+  CalendarDaysIcon,
+  ForwardIcon,
+  HomeIcon,
+} from "@heroicons/vue/20/solid"
+import { useRoute, useRouter } from "vue-router"
 
+const route = useRoute()
+const router = useRouter()
 const pageStore = usePageStore()
+
+const choosePromotion = (promotion) => {
+  router.push({
+    name: route.name,
+    params: {
+      ...route.params,
+      promotion,
+    },
+  })
+}
 </script>
 
 <template>
   <div
-    class="fixed top-0 left-0 z-10 justify-between w-full p-1 text-white h-18 sm:h-8 xl:flex bg-etml"
+    class="fixed top-0 left-0 z-10 flex items-center justify-between w-full h-12 p-2 text-white bg-etml"
   >
-    <span class="hidden xl:inline">etml.burkhalter.dev</span>
-    <nav class="flex flex-wrap justify-center text-2xl sm:text-base">
-      <div class="flex gap-2 px-2 border-x">
-        <span
-          @click="pageStore.pageLeft = 0"
-          class="cursor-pointer select-none"
-          title="First"
-          >⇤</span
-        >
-        <span
-          @click="pageStore.pageLeft -= 2"
-          class="cursor-pointer select-none"
-          title="Previous"
-          >←</span
-        >
-        <input
-          type="text"
-          :value="pageStore.pageLeft"
-          @change="(e) => (pageStore.pageLeft = e.target.value)"
-          class="w-16 text-center text-etml"
-        />
-        <span
-          @click="pageStore.pageLeft += 2"
-          class="cursor-pointer select-none"
-          title="Next"
-          >→</span
-        >
-        <span
-          @click="pageStore.pageLeft = Infinity"
-          class="cursor-pointer select-none"
-          title="Last"
-          >⇥</span
-        >
-      </div>
-      <router-link :to="{ name: 'Intro' }" class="px-2 border-r">
-        Accueil
+    <div class="hidden select-none xl:inline">
+      <div class="text-center">etml.burkhalter.dev</div>
+      <div class="text-center text-2xs">&copy; 2023 Yannis Burkhalter</div>
+    </div>
+    <nav
+      class="flex flex-wrap items-center gap-3"
+      v-if="route.params.promotion"
+    >
+      <router-link
+        :to="{
+          name: 'Cover',
+          params: { promotion: route.params.promotion },
+        }"
+        class="hover:opacity-75"
+      >
+        <HomeIcon class="w-6" />
       </router-link>
       <router-link
         :to="{
-          name: 'Agenda',
+          name: 'Schedule',
           params: {
-            promotion: 'mtu1e',
-            year: pageStore.now.year,
-            week: pageStore.now.week,
+            promotion: route.params.promotion,
           },
         }"
-        class="px-2 border-r"
+        class="hover:opacity-75"
+      >
+        <CalendarDaysIcon class="w-6" />
+      </router-link>
+      <button @click="pageStore.pageLeft--" class="hover:opacity-75">
+        <BackwardIcon class="w-6" />
+      </button>
+      <input
+        type="text"
+        :value="pageStore.pageLeft"
+        @keydown.enter="(event) => (pageStore.pageLeft = event.target.value)"
+        class="w-10 p-1 text-lg text-center rounded outline-none text-etml"
+      />
+      <button @click="pageStore.pageRight++" class="hover:opacity-75">
+        <ForwardIcon class="w-6" />
+      </button>
+      <router-link
+        v-if="route.params.promotion == 'mtu2e'"
+        :to="{
+          name: 'Agenda',
+          params: {
+            promotion: route.params.promotion,
+            week: now().week,
+          },
+        }"
+        class="text-xl font-semibold hover:opacity-75"
       >
         Aujourd'hui
       </router-link>
+      <span v-else class="text-xl font-semibold opacity-50 select-none">
+        Aujourd'hui
+      </span>
     </nav>
-    <span class="hidden xl:inline">&copy; Burkhalter Yannis</span>
+    <select
+      class="w-32 px-2 py-1 bg-white rounded text-etml"
+      :value="route.params.promotion"
+      @change="(event) => choosePromotion(event.target.value)"
+    >
+      <option value="mtu1e">MTU1E</option>
+      <option value="mtu2e">MTU2E</option>
+    </select>
   </div>
 </template>

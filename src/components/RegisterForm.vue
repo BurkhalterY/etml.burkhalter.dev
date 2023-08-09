@@ -12,8 +12,6 @@ const email = ref("")
 const password = ref("")
 const firstName = ref("")
 const lastName = ref("")
-const promotion = ref("")
-const isPublic = ref(false)
 
 const {
   mutate: register,
@@ -25,15 +23,11 @@ const {
     password: password.value,
     firstName: firstName.value,
     lastName: lastName.value,
-    promotion: promotion.value,
-    isPublic: isPublic.value,
   },
 }))
 
 onRegisterDone((result) => {
-  const data = result.data.register
-  authStore.token = data.token
-  authStore.user = data.user
+  authStore.login(result.data.register.token)
   popupStore.component = false
 })
 </script>
@@ -76,16 +70,6 @@ onRegisterDone((result) => {
       class="p-2 border rounded-sm"
       @keyup.enter="register"
     />
-
-    <label>Classe :</label>
-    <select
-      v-model="promotion"
-      class="p-2 bg-white border rounded-sm"
-      @keyup.enter="register"
-    >
-      <option></option>
-      <option value="mtu1e">MTU1E</option>
-    </select>
 
     <span class="text-sm text-etml">*champs obligatoires</span>
     <button

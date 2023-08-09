@@ -34,30 +34,26 @@ const route = useRoute()
           class="inline-block w-4 h-4 border border-orange-700 cursor-pointer"
         />
         <td v-if="task.matter.shortName" class="px-2 font-bold align-top">
-          {{ task.matter.shortName }}
+          {{
+            task.matter.abbr == "ecdr" && route.params.promotion == "mtu2e"
+              ? "Droit"
+              : task.matter.shortName
+          }}
         </td>
         <td class="px-2 align-top" :colspan="task.matter.shortName ? 1 : 2">
           {{ types[task.type].emoji }} {{ task.title }}
         </td>
-        <td v-if="authStore.user?.admin" class="align-top">
+        <td v-if="authStore.admin" class="align-top">
           <button
             @click="
               ;[
                 (popupStore.component = TaskForm),
-                (popupStore.additionalData = {
-                  id: task.id,
-                  date: task.date,
-                  promotion: route.params.promotion,
-                  type: task.type,
-                  matter: task.matter.abbr,
-                  title: task.title,
-                  content: task.content,
-                }),
+                (popupStore.additionalData = task),
               ]
             "
             class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml"
           >
-            Edit
+            Editer
           </button>
         </td>
       </tr>

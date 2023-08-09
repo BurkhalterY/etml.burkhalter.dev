@@ -1,16 +1,13 @@
-import { getWeekNumber } from "@/utils"
 import { defineStore } from "pinia"
-import { computed, ref } from "vue"
+import { computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
 
 export const usePageStore = defineStore("page", () => {
   const route = useRoute()
   const router = useRouter()
 
-  const now = ref(getWeekNumber(new Date(Date.now() + 1000 * 3600 * 48))) // jump directly to the next week when it is the weekend
-
   const pageLeft = computed({
-    get() {
+    get: () => {
       switch (route.name) {
         case "Cover":
           return 0
@@ -26,58 +23,67 @@ export const usePageStore = defineStore("page", () => {
           return 96
       }
     },
-    set(pageNumber) {
+    set: (pageNumber) => {
       if (pageNumber % 2) pageNumber -= 1
-      switch (true) {
-        case pageNumber <= 1:
-          router.push({ name: "Cover" })
-          break
-        case pageNumber >= 2 && pageNumber <= 3:
-          router.push({ name: "Intro" })
-          break
-        case pageNumber >= 4 && pageNumber <= 5:
-          router.push({
-            name: "Schedule",
-            params: {
-              promotion: "mtu1e",
-            },
-          })
-          break
-        case pageNumber >= 6 && pageNumber <= 43:
-          router.push({
-            name: "Agenda",
-            params: {
-              promotion: "mtu1e",
-              year: now.value.year - (now.value.week <= 26),
-              week: (pageNumber - 6) / 2 + 34,
-            },
-          })
-          break
-        case pageNumber >= 44 && pageNumber <= 95:
-          router.push({
-            name: "Agenda",
-            params: {
-              promotion: "mtu1e",
-              year: now.value.year - (now.value.week >= 34),
-              week: pageNumber / 2 - 21,
-            },
-          })
-          break
-        case pageNumber >= 96:
-          router.push({ name: "WIP" })
-          break
+      if (pageNumber <= 1) {
+        router.push({
+          name: "Cover",
+          params: { promotion: route.params.promotion },
+        })
+        return
+      }
+      if (pageNumber >= 2 && pageNumber <= 3) {
+        router.push({
+          name: "Intro",
+          params: { promotion: route.params.promotion },
+        })
+        return
+      }
+      if (pageNumber >= 4 && pageNumber <= 5) {
+        router.push({
+          name: "Schedule",
+          params: {
+            promotion: route.params.promotion,
+          },
+        })
+        return
+      }
+      if (pageNumber >= 6 && pageNumber <= 43) {
+        router.push({
+          name: "Agenda",
+          params: {
+            promotion: route.params.promotion,
+            week: (pageNumber - 6) / 2 + 34,
+          },
+        })
+        return
+      }
+      if (pageNumber >= 44 && pageNumber <= 95) {
+        router.push({
+          name: "Agenda",
+          params: {
+            promotion: route.params.promotion,
+            week: pageNumber / 2 - 21,
+          },
+        })
+        return
+      }
+      if (pageNumber >= 96) {
+        router.push({
+          name: "WIP",
+          params: { promotion: route.params.promotion },
+        })
+        return
       }
     },
   })
 
   const pageRight = computed({
-    get() {
-      return pageLeft.value + 1
-    },
-    set(pageNumber) {
-      pageLeft = pageNumber - 1
+    get: () => pageLeft.value + 1,
+    set: (pageNumber) => {
+      pageLeft.value = pageNumber
     },
   })
 
-  return { pageLeft, pageRight, now }
+  return { pageLeft, pageRight }
 })

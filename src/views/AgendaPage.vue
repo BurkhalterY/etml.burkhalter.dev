@@ -41,15 +41,17 @@ const LINES_ON_SUNDAY = 3
       </h1>
       <div class="w-full border-b border-orange-700">
         <h2 class="inline font-bold text-orange-700 uppercase text-2xs">
-          <b>Communications</b>
+          Communications
         </h2>
+      </div>
+      <div class="w-full border-b border-orange-700">
         <template v-if="error">
           <transition appear>
-            <span class="mx-3 text-red-500">Une erreur est survenue</span>
+            <div class="text-center text-red-500">Une erreur est survenue</div>
           </transition>
         </template>
+        <template v-else>&nbsp;</template>
       </div>
-      <div class="w-full border-b border-orange-700">&nbsp;</div>
       <div class="w-full border-b border-orange-700">&nbsp;</div>
     </div>
     <div

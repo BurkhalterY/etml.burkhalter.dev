@@ -22,7 +22,7 @@ const week = computed(() => {
 })
 const year = computed(() => getYear(route.params.promotion, week.value))
 
-const { result } = useQuery(GET_WEEK, () => ({
+const { result, error } = useQuery(GET_WEEK, () => ({
   promotion: route.params.promotion,
   year: year.value,
   week: week.value,
@@ -41,8 +41,13 @@ const LINES_ON_SUNDAY = 3
       </h1>
       <div class="w-full border-b border-orange-700">
         <h2 class="inline font-bold text-orange-700 uppercase text-2xs">
-          Communications
+          <b>Communications</b>
         </h2>
+        <template v-if="error">
+          <transition appear>
+            <span class="mx-3 text-red-500">Une erreur est survenue</span>
+          </transition>
+        </template>
       </div>
       <div class="w-full border-b border-orange-700">&nbsp;</div>
       <div class="w-full border-b border-orange-700">&nbsp;</div>

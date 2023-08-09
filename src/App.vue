@@ -60,16 +60,6 @@ const pageStore = usePageStore()
 </template>
 
 <style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-
 @media (min-width: 1280px) {
   .page {
     clip-path: polygon(
@@ -84,7 +74,7 @@ const pageStore = usePageStore()
     );
   }
 
-  .demi-page {
+  .half-page {
     clip-path: polygon(
       100% 100%,
       100% 0,

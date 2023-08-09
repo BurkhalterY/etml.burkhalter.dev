@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
-  { path: "/", redirect: "/mtu2e" },
   {
     path: "/:promotion",
     name: "Cover",
@@ -27,11 +26,21 @@ const routes = [
     name: "WIP",
     component: () => import("@/views/WipPage.vue"),
   },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/mtu2e",
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory("/"),
   routes,
+})
+
+router.beforeEach((to) => {
+  if (to.params.promotion != "mtu1e" && to.params.promotion != "mtu2e") {
+    return "/mtu2e"
+  }
 })
 
 export default router

@@ -25,15 +25,17 @@ const choosePromotion = (promotion) => {
 </script>
 
 <template>
-  <div
-    class="fixed top-0 left-0 z-10 flex items-center justify-between w-full h-12 p-2 text-white bg-etml"
+  <nav
+    class="items-center w-full grid-cols-2 gap-2 px-2 py-1 text-white lg:grid-cols-3 md:grid md:h-12 bg-etml"
   >
-    <div class="hidden select-none xl:inline">
-      <div class="text-center">etml.burkhalter.dev</div>
-      <div class="text-center text-2xs">&copy; 2023 Yannis Burkhalter</div>
+    <div
+      class="flex flex-wrap items-baseline justify-around h-full select-none md:flex-col"
+    >
+      <div>etml.burkhalter.dev</div>
+      <div class="text-2xs">&copy; 2023 Yannis Burkhalter</div>
     </div>
-    <nav
-      class="flex flex-wrap items-center gap-3"
+    <div
+      class="flex flex-wrap items-center justify-center h-full gap-y-1 gap-x-3"
       v-if="route.params.promotion"
     >
       <router-link
@@ -56,18 +58,6 @@ const choosePromotion = (promotion) => {
       >
         <CalendarDaysIcon class="w-6" />
       </router-link>
-      <button @click="pageStore.pageLeft--" class="hover:opacity-75">
-        <BackwardIcon class="w-6" />
-      </button>
-      <input
-        type="text"
-        :value="pageStore.pageLeft"
-        @keydown.enter="(event) => (pageStore.pageLeft = event.target.value)"
-        class="w-10 p-1 text-lg text-center rounded outline-none text-etml"
-      />
-      <button @click="pageStore.pageRight++" class="hover:opacity-75">
-        <ForwardIcon class="w-6" />
-      </button>
       <router-link
         v-if="route.params.promotion == 'mtu2e'"
         :to="{
@@ -77,21 +67,36 @@ const choosePromotion = (promotion) => {
             week: now().week,
           },
         }"
-        class="text-xl font-semibold hover:opacity-75"
+        class="w-6 font-semibold hover:opacity-75"
       >
-        Aujourd'hui
+        Auj.
       </router-link>
-      <span v-else class="text-xl font-semibold opacity-50 select-none">
-        Aujourd'hui
-      </span>
-    </nav>
-    <select
-      class="w-32 px-2 py-1 bg-white rounded text-etml"
-      :value="route.params.promotion"
-      @change="(event) => choosePromotion(event.target.value)"
-    >
-      <option value="mtu1e">MTU1E</option>
-      <option value="mtu2e">MTU2E</option>
-    </select>
-  </div>
+      <div v-else class="w-6 font-semibold opacity-50 select-none">Auj.</div>
+      <div class="flex items-center justify-center h-full gap-x-3">
+        <BackwardIcon
+          @click="pageStore.pageLeft--"
+          class="w-6 hover:opacity-75"
+        />
+        <input
+          type="text"
+          :value="pageStore.pageLeft"
+          @keydown.enter="(event) => (pageStore.pageLeft = event.target.value)"
+          class="h-10 p-2 text-lg font-semibold text-center rounded outline-none aspect-square text-etml"
+        />
+        <ForwardIcon
+          @click="pageStore.pageRight++"
+          class="w-6 hover:opacity-75"
+        />
+      </div>
+      <select
+        class="w-24 h-8 text-lg font-semibold text-center bg-white rounded text-etml"
+        :value="route.params.promotion"
+        @change="(event) => choosePromotion(event.target.value)"
+      >
+        <option value="mtu1e">MTU1E</option>
+        <option value="mtu2e">MTU2E</option>
+      </select>
+    </div>
+    <div />
+  </nav>
 </template>

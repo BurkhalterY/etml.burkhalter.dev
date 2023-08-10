@@ -43,7 +43,7 @@ const route = useRoute()
         <td class="px-2 align-top" :colspan="task.matter.shortName ? 1 : 2">
           {{ types[task.type].emoji }} {{ task.title }}
         </td>
-        <td v-if="authStore.admin" class="align-top">
+        <td v-if="authStore.isAdmin" class="align-top">
           <button
             @click="
               ;[

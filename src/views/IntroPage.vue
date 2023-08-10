@@ -1,15 +1,11 @@
 <script setup>
-import { GET_ME } from "@/api/queries"
 import LoginForm from "@/components/LoginForm.vue"
 import RegisterForm from "@/components/RegisterForm.vue"
+import { useAuthStore } from "@/stores/auth"
 import { usePopupStore } from "@/stores/popup"
-import { useLazyQuery } from "@vue/apollo-composable"
 
 const popupStore = usePopupStore()
-
-const { load, result } = useLazyQuery(GET_ME)
-
-if (localStorage.hasOwnProperty("token")) load()
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -86,21 +82,21 @@ if (localStorage.hasOwnProperty("token")) load()
     <div class="relative flex-grow">
       <div
         class="flex flex-col h-full gap-6 p-2 -m-2 duration-300 ease-linear rounded"
-        :class="{ 'bg-slate-200 blur-sm grayscale': !result?.me }"
+        :class="{ 'bg-slate-200 blur-sm grayscale': !authStore.logged }"
       >
         <div class="flex items-end gap-1">
           <label>Prénom :</label>
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            :value="result?.me.firstName"
+            :value="authStore.user?.firstName"
             readonly
           />
           <label>Nom :</label>
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            :value="result?.me.lastName"
+            :value="authStore.user?.lastName"
             readonly
           />
         </div>
@@ -109,7 +105,7 @@ if (localStorage.hasOwnProperty("token")) load()
           <input
             type="text"
             class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
-            :value="result?.me.email"
+            :value="authStore.user?.email"
             readonly
           />
         </div>
@@ -130,7 +126,7 @@ if (localStorage.hasOwnProperty("token")) load()
         ></textarea>
       </div>
       <div
-        v-if="!result?.me"
+        v-if="!authStore.logged"
         class="absolute top-0 flex flex-col items-center justify-center w-full h-full gap-2"
       >
         <div class="flex gap-2">

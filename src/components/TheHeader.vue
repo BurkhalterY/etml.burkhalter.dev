@@ -73,23 +73,21 @@ const choosePromotion = (promotion) => {
       </router-link>
       <div v-else class="w-6 font-semibold opacity-50 select-none">Auj.</div>
       <div class="flex items-center justify-center h-full gap-x-3">
-        <BackwardIcon
-          @click="pageStore.pageLeft--"
-          class="w-6 hover:opacity-75"
-        />
+        <button @click="pageStore.pageLeft--" class="w-6 hover:opacity-75">
+          <BackwardIcon />
+        </button>
         <input
           type="text"
           :value="pageStore.pageLeft"
           @keydown.enter="(event) => (pageStore.pageLeft = event.target.value)"
           class="h-10 p-2 text-lg font-semibold text-center rounded outline-none aspect-square text-etml"
         />
-        <ForwardIcon
-          @click="pageStore.pageRight++"
-          class="w-6 hover:opacity-75"
-        />
+        <button @click="pageStore.pageRight++" class="w-6 hover:opacity-75">
+          <ForwardIcon />
+        </button>
       </div>
       <select
-        class="w-24 h-8 text-lg font-semibold text-center bg-white rounded text-etml"
+        class="w-24 h-8 px-2 text-lg font-semibold bg-white rounded text-etml"
         :value="route.params.promotion"
         @change="(event) => choosePromotion(event.target.value)"
       >

@@ -1,11 +1,12 @@
 import { GET_ME } from "@/api/queries"
 import { useLazyQuery } from "@vue/apollo-composable"
 import { defineStore } from "pinia"
-import { ref, watch } from "vue"
+import { computed, ref, watch } from "vue"
 
 export const useAuthStore = defineStore("auth", () => {
-  const logged = ref(false)
-  const admin = ref(false)
+  const user = ref(null)
+  const logged = computed(() => !!user.value)
+  const isAdmin = computed(() => user.value?.me?.admin)
 
   const { load, result, loading, error } = useLazyQuery(GET_ME, null, {
     fetchPolicy: "network-only",
@@ -19,11 +20,8 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   watch(loading, async (value) => {
-    if (!value && !error.value) {
-      logged.value = true
-      admin.value = result.value.me.admin
-    }
+    if (!value && !error.value) user.value = result.value.me
   })
 
-  return { admin, login }
+  return { login, user, logged, isAdmin }
 })

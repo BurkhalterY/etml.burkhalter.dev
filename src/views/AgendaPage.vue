@@ -96,7 +96,7 @@ const LINES_ON_SUNDAY = 3
               (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) - 1
             )"
           class="relative leading-relaxed truncate border-b border-orange-700"
-          :class="{ 'pr-8': authStore.admin }"
+          :class="{ 'pr-8': authStore.isAdmin }"
         >
           <div
             class="inline-block w-4 h-4 mb-1 align-middle border border-orange-700 cursor-pointer"
@@ -112,7 +112,7 @@ const LINES_ON_SUNDAY = 3
           {{ types[task.type].emoji }}
           <span :title="task.title">{{ task.title }}</span>
           <button
-            v-if="authStore.admin"
+            v-if="authStore.isAdmin"
             @click="
               ;[
                 (popupStore.component = TaskForm),
@@ -147,7 +147,7 @@ const LINES_ON_SUNDAY = 3
             }}
           </span>
           <button
-            v-if="authStore.admin"
+            v-if="authStore.isAdmin"
             @click="
               ;[
                 (popupStore.component = TaskForm),

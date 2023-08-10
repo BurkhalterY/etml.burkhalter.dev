@@ -29,7 +29,7 @@ const choosePromotion = (promotion) => {
     class="items-center w-full grid-cols-2 gap-2 px-2 py-1 text-white lg:grid-cols-3 md:grid md:h-12 bg-etml"
   >
     <div
-      class="flex flex-wrap items-baseline justify-around h-full select-none md:flex-col"
+      class="flex flex-wrap items-center justify-around h-full select-none md:flex-col"
     >
       <div>etml.burkhalter.dev</div>
       <div class="text-2xs">&copy; 2023 Yannis Burkhalter</div>

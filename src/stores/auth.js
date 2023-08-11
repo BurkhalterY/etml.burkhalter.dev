@@ -6,7 +6,7 @@ import { computed, ref, watch } from "vue"
 export const useAuthStore = defineStore("auth", () => {
   const user = ref(null)
   const logged = computed(() => !!user.value)
-  const isAdmin = computed(() => user.value?.me?.admin)
+  const isAdmin = computed(() => user.value?.admin)
 
   const { load, result, loading, error } = useLazyQuery(GET_ME, null, {
     fetchPolicy: "network-only",

@@ -15,6 +15,7 @@ const lastName = ref("")
 
 const {
   mutate: register,
+  loading: registerLoading,
   error: registerError,
   onDone: onRegisterDone,
 } = useMutation(REGISTER, () => ({
@@ -28,13 +29,13 @@ const {
 
 onRegisterDone((result) => {
   authStore.login(result.data.register.token)
-  popupStore.component = false
+  popupStore.component = null
 })
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <h2 class="text-xl font-bold text-center">Inscription</h2>
+    <h2 class="text-xl font-semibold text-center">Inscription</h2>
     <span v-if="registerError" class="text-red-500">
       {{ registerError.message }}
     </span>
@@ -75,6 +76,7 @@ onRegisterDone((result) => {
     <button
       @click="register"
       class="p-2 mt-2 text-white rounded-sm bg-etml hover:opacity-90 active:opacity-80"
+      :disabled="registerLoading"
     >
       S'incrire
     </button>

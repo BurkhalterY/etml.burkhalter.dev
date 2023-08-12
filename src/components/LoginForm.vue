@@ -13,6 +13,7 @@ const password = ref("")
 
 const {
   mutate: login,
+  loading: loginLoading,
   error: loginError,
   onDone: onLoginDone,
 } = useMutation(LOGIN, () => ({
@@ -24,13 +25,13 @@ const {
 
 onLoginDone((result) => {
   authStore.login(result.data.login.token)
-  popupStore.component = false
+  popupStore.component = null
 })
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <h2 class="text-xl font-bold text-center">Connexion</h2>
+    <h2 class="text-xl font-semibold text-center">Connexion</h2>
     <span v-if="loginError" class="text-red-500">
       {{ loginError.message }}
     </span>
@@ -54,6 +55,7 @@ onLoginDone((result) => {
     <button
       @click="login"
       class="p-2 mt-2 text-white rounded-sm bg-etml hover:opacity-90 active:opacity-80"
+      :disabled="loginLoading"
     >
       Se connecter
     </button>

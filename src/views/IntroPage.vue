@@ -43,24 +43,6 @@ const authStore = useAuthStore()
                 aestetica
               </a>
             </li>
-            <li>
-              <a
-                href="https://github.com/BurkhalterY/etml.burkhalter.dev"
-                target="_blank"
-                class="hover:underline"
-              >
-                View this on GitHub
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://github.com/BurkhalterY/api.etml.burkhalter.dev"
-                target="_blank"
-                class="hover:underline"
-              >
-                View API on GitHub
-              </a>
-            </li>
           </ul>
           <ul>
             <li>&copy; 2023 Yannis Burkhalter</li>
@@ -131,14 +113,14 @@ const authStore = useAuthStore()
       >
         <div class="flex gap-2">
           <button
-            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
             @click="popupStore.component = LoginForm"
+            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
           >
             Connexion
           </button>
           <button
-            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
             @click="popupStore.component = RegisterForm"
+            class="w-32 p-2 text-white rounded bg-etml hover:brightness-125"
           >
             Inscription
           </button>

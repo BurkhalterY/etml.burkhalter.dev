@@ -40,7 +40,7 @@ const LINES_ON_SUNDAY = 3
         <span class="float-right">{{ year }}</span>
       </h1>
       <div class="w-full border-b border-orange-700">
-        <h2 class="inline font-bold text-orange-700 uppercase text-2xs">
+        <h2 class="inline font-black text-orange-700 uppercase text-2xs">
           Communications
         </h2>
       </div>
@@ -63,8 +63,6 @@ const LINES_ON_SUNDAY = 3
       })) || []"
     >
       <h2
-        class="px-1 text-white bg-orange-700"
-        :class="{ 'cursor-pointer': day.tasks.length }"
         @click="
           day.tasks.length
             ? [
@@ -73,6 +71,8 @@ const LINES_ON_SUNDAY = 3
               ]
             : []
         "
+        class="px-1 text-white bg-orange-700"
+        :class="{ 'cursor-pointer': day.tasks.length }"
       >
         <span class="text-2xl font-light">
           {{ day.date.getDate() }}
@@ -96,36 +96,27 @@ const LINES_ON_SUNDAY = 3
               (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) - 1
             )"
           class="relative leading-relaxed truncate border-b border-orange-700"
-          :class="{ 'pr-8': authStore.isAdmin }"
+          :title="task.title"
         >
           <div
             class="inline-block w-4 h-4 mb-1 align-middle border border-orange-700 cursor-pointer"
           />
           {{}}
-          <strong v-if="task.matter.shortName" class="inline-block w-20">
+          <span
+            v-if="task.matter.shortName"
+            class="inline-block w-20 font-semibold"
+          >
             {{
+              // yes, it is hardcoded...
               task.matter.abbr == "ecdr" && route.params.promotion == "mtu2e"
                 ? "Droit"
                 : task.matter.shortName
             }}
-          </strong>
-          {{ types[task.type].emoji }}
-          <span :title="task.title">{{ task.title }}</span>
-          <button
-            v-if="authStore.isAdmin"
-            @click="
-              ;[
-                (popupStore.component = TaskForm),
-                (popupStore.additionalData = task),
-              ]
-            "
-            class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml absolute right-0 my-1"
-          >
-            Éditer
-          </button>
+          </span>
+          {{ types[task.type].emoji }} {{ task.title }}
         </li>
         <li class="leading-relaxed border-b border-orange-700">
-          <span
+          <template
             v-if="
               day.tasks.length >=
               (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY)
@@ -145,7 +136,20 @@ const LINES_ON_SUNDAY = 3
                 ? "autres éléments"
                 : "autre élément"
             }}
-          </span>
+            <button
+              @click="
+                day.tasks.length
+                  ? [
+                      (popupStore.component = DayPopup),
+                      (popupStore.additionalData = { day }),
+                    ]
+                  : []
+              "
+              class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml"
+            >
+              Voir
+            </button>
+          </template>
           <button
             v-if="authStore.isAdmin"
             @click="
@@ -153,7 +157,7 @@ const LINES_ON_SUNDAY = 3
                 (popupStore.component = TaskForm),
                 (popupStore.additionalData = {
                   date: day.strDate,
-                  promotion: 'mtu2e',
+                  promotion: route.params.promotion,
                   matter: '',
                   type: 'homework',
                   title: '',

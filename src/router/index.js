@@ -37,7 +37,7 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
   if (to.params.promotion != "mtu1e" && to.params.promotion != "mtu2e") {
     return "/mtu2e"
   }

@@ -16,7 +16,7 @@ const originalData = ref({ ...task.value })
 
 const { result } = useQuery(GET_MATTERS)
 
-const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
+const { mutate, loading, error, onDone } = useMutation(MUTATE_TASK, () => ({
   variables: { ...task.value, matter: matter.value },
   update: (cache, { data: { task } }) => {
     if (originalData.value.id) {
@@ -27,7 +27,7 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
       const QUERY = {
         query: GET_WEEK,
         variables: {
-          promotion: route.params.promotion,
+          promotion: originalData.value.promotion,
           year: year,
           week: week,
         },
@@ -48,7 +48,7 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
     const QUERY = {
       query: GET_WEEK,
       variables: {
-        promotion: route.params.promotion,
+        promotion: task.promotion,
         year: year,
         week: week,
       },
@@ -64,11 +64,12 @@ const { mutate, error, onDone } = useMutation(MUTATE_TASK, () => ({
 }))
 
 onDone(() => {
-  popupStore.component = false
+  popupStore.component = null
 })
 
 const {
   mutate: mutateDelete,
+  loading: deleteLoading,
   error: deleteError,
   onDone: onDeleted,
 } = useMutation(DELETE_TASK, () => ({
@@ -97,7 +98,7 @@ const {
 }))
 
 onDeleted(() => {
-  popupStore.component = false
+  popupStore.component = null
 })
 
 const timer = ref(3)
@@ -119,7 +120,7 @@ const resetInterval = () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <h2 class="text-xl font-bold text-center">Devoir</h2>
+    <h2 class="text-xl font-semibold text-center">Devoir</h2>
     <span v-if="error" class="text-red-500">
       {{ error.message }}
     </span>
@@ -179,6 +180,7 @@ const resetInterval = () => {
       <button
         @click="mutate"
         class="flex-grow p-2 mt-2 text-white rounded-sm bg-etml hover:opacity-90 active:opacity-80"
+        :disabled="loading"
       >
         Valider
       </button>
@@ -187,8 +189,8 @@ const resetInterval = () => {
         @mouseenter="startInterval"
         @mouseleave="resetInterval"
         @click="mutateDelete"
-        class="p-2 mt-2 font-bold text-white bg-red-600 rounded-sm hover:opacity-90 active:opacity-80 aspect-square disabled:cursor-not-allowed"
-        :disabled="timer"
+        class="p-2 mt-2 font-semibold text-white bg-red-600 rounded-sm hover:opacity-90 active:opacity-80 aspect-square disabled:cursor-not-allowed"
+        :disabled="timer || deleteLoading"
       >
         {{ timer || "⨉" }}
       </button>

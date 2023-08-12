@@ -18,7 +18,7 @@ const pageStore = usePageStore()
           <component
             :is="Component"
             :key="route.path"
-            class="px-16 pt-12 pb-20 min-h-[800px] xl:h-[800px]"
+            class="px-5 pt-8 md:px-16 md:pt-12 pb-20 min-h-[800px] xl:h-[800px]"
           />
         </transition>
       </router-view>
@@ -35,6 +35,7 @@ const pageStore = usePageStore()
         {{ pageStore.pageRight }}
       </div>
       <div
+        v-if="pageStore.pageRight != 1"
         class="absolute w-24 h-24 -rotate-45 border-t border-black border-dashed -bottom-12 -right-12"
       />
     </div>
@@ -48,10 +49,10 @@ const pageStore = usePageStore()
     <teleport to="body">
       <div
         v-if="popupStore.component"
-        class="fixed top-0 left-0 z-20 flex items-center justify-center w-full h-full bg-black bg-opacity-25"
         @click="popupStore.component = null"
+        class="fixed inset-0 z-20 grid items-center justify-center px-4 py-8 overflow-y-scroll bg-black bg-opacity-25"
       >
-        <div class="p-4 bg-white rounded-md w-max" @click.stop>
+        <div @click.stop class="p-4 bg-white rounded-md">
           <component :is="popupStore.component" />
         </div>
       </div>

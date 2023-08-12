@@ -28,22 +28,30 @@ const route = useRoute()
         v-for="task in [...popupStore.additionalData.day.tasks].sort(
           tasksSorter
         )"
-        class="leading-relaxed border-b border-orange-700"
+        class="leading-snug border-b border-orange-700"
       >
+        <td class="px-0 py-1 align-top">
+          <div
+            class="inline-block w-4 h-4 mb-1 align-middle border border-orange-700 cursor-pointer"
+          />
+        </td>
         <td
-          class="inline-block w-4 h-4 border border-orange-700 cursor-pointer"
-        />
-        <td v-if="task.matter.shortName" class="px-2 font-bold align-top">
+          v-if="task.matter.shortName"
+          class="px-2 py-1 font-semibold align-top"
+        >
           {{
             task.matter.abbr == "ecdr" && route.params.promotion == "mtu2e"
               ? "Droit"
               : task.matter.shortName
           }}
         </td>
-        <td class="px-2 align-top" :colspan="task.matter.shortName ? 1 : 2">
+        <td
+          class="px-2 py-1 align-top"
+          :colspan="task.matter.shortName ? 1 : 2"
+        >
           {{ types[task.type].emoji }} {{ task.title }}
         </td>
-        <td v-if="authStore.isAdmin" class="align-top">
+        <td v-if="authStore.isAdmin" class="py-1 align-top">
           <button
             @click="
               ;[
@@ -53,7 +61,7 @@ const route = useRoute()
             "
             class="mx-0.5 px-0.5 rounded text-sm text-white bg-etml"
           >
-            Editer
+            Éditer
           </button>
         </td>
       </tr>

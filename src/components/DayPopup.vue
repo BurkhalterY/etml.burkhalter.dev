@@ -28,6 +28,7 @@ const route = useRoute()
         v-for="task in [...popupStore.additionalData.day.tasks].sort(
           tasksSorter
         )"
+        :key="task.id"
         class="leading-snug border-b border-orange-700"
       >
         <td class="px-0 py-1 align-top">

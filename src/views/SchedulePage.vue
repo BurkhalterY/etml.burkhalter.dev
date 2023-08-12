@@ -302,11 +302,12 @@ const schedule = reactive({
 <template>
   <div class="flex flex-col gap-y-8 gap-x-32 xl:flex-row">
     <table
-      class="h-0 text-center xl:w-1/2"
       v-for="day in schedule[route.params.promotion]"
+      :key="day"
+      class="h-0 text-center xl:w-1/2"
     >
       <tr class="text-white">
-        <th class="border bg-opacity-40 bg-etml border-etml" colspan="2">
+        <th class="bg-opacity-50 border bg-etml border-etml" colspan="2">
           Horaire
         </th>
         <th class="uppercase border bg-etml border-etml" colspan="2">
@@ -322,13 +323,14 @@ const schedule = reactive({
         </td>
         <td class="border border-etml">&nbsp;</td>
         <td
-          class="w-16 text-sm font-bold text-center border bg-opacity-40 bg-etml text-etml border-etml"
+          class="w-16 text-sm font-bold text-center bg-opacity-50 border bg-etml text-etml border-etml"
         >
           salle
         </td>
       </tr>
       <tr
         v-for="period in day.periods"
+        :key="period"
         :class="{ 'bg-neutral-200': period.optional }"
       >
         <td class="w-16 border border-etml">{{ period.start }}</td>
@@ -336,7 +338,7 @@ const schedule = reactive({
         <td class="px-1 text-left border border-etml">
           {{ period.matter }}
         </td>
-        <td class="w-16 border bg-opacity-40 bg-etml border-etml">
+        <td class="w-16 bg-opacity-50 border bg-etml border-etml">
           {{ period.classroom }}
         </td>
       </tr>

@@ -35,8 +35,8 @@ const choosePromotion = (promotion) => {
       <div class="text-2xs">&copy; 2023 Yannis Burkhalter</div>
     </div>
     <div
-      class="flex flex-wrap items-center justify-center h-full gap-y-1 gap-x-3"
       v-if="route.params.promotion"
+      class="flex flex-wrap items-center justify-center h-full gap-y-1 gap-x-3"
     >
       <router-link
         :to="{
@@ -72,7 +72,7 @@ const choosePromotion = (promotion) => {
         Auj.
       </router-link>
       <div v-else class="w-6 font-semibold opacity-50 select-none">Auj.</div>
-      <div class="flex items-center justify-center h-full gap-x-3">
+      <div class="flex items-center justify-center h-full gap-3">
         <button @click="pageStore.pageLeft--" class="w-6 hover:opacity-75">
           <BackwardIcon />
         </button>
@@ -87,9 +87,9 @@ const choosePromotion = (promotion) => {
         </button>
       </div>
       <select
-        class="w-24 h-8 px-2 text-lg font-semibold bg-white rounded text-etml"
         :value="route.params.promotion"
         @change="(event) => choosePromotion(event.target.value)"
+        class="w-24 h-8 px-2 text-lg font-semibold bg-white rounded text-etml"
       >
         <option value="mtu1e">MTU1E</option>
         <option value="mtu2e">MTU2E</option>

@@ -44,32 +44,32 @@ onRegisterDone((result) => {
     <input
       type="text"
       v-model="email"
-      class="p-2 border rounded-sm"
       @keyup.enter="register"
+      class="p-2 border rounded-sm"
     />
 
     <label>Mot de passe<span class="text-etml">*</span> :</label>
     <input
       type="password"
       v-model="password"
-      class="p-2 border rounded-sm"
       @keyup.enter="register"
+      class="p-2 border rounded-sm"
     />
 
     <label>Prénom :</label>
     <input
       type="text"
       v-model="firstName"
-      class="p-2 border rounded-sm"
       @keyup.enter="register"
+      class="p-2 border rounded-sm"
     />
 
     <label>Nom :</label>
     <input
       type="text"
       v-model="lastName"
-      class="p-2 border rounded-sm"
       @keyup.enter="register"
+      class="p-2 border rounded-sm"
     />
 
     <span class="text-sm text-etml">*champs obligatoires</span>

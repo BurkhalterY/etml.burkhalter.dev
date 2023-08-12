@@ -10,19 +10,19 @@ const authStore = useAuthStore()
 
 <template>
   <div class="flex flex-col pl-16 text-etml xl:ml-[50%]">
-    <div class="grid grid-cols-7 mb-8">
-      <img class="col-span-2 p-1" src="/img/etml.png" alt="ETML" />
-      <div class="col-span-5">
-        <h1 class="text-lg font-bold leading-none font-logo">
+    <div class="grid grid-cols-3 gap-1 mb-8">
+      <img src="/img/etml.svg" alt="ETML" loading="lazy" />
+      <div class="col-span-2">
+        <h1 class="leading-3 font-logo">
           <br />Ecole Technique <br />Ecole des metiers Lausanne
         </h1>
         <hr class="my-8 border-etml" />
         <div class="flex flex-col gap-2 text-sm">
           <ul>
             <li>
-              <a href="https://etml.burkhalter.dev/" class="hover:underline"
-                >etml.burkhalter.dev</a
-              >
+              <a href="https://etml.burkhalter.dev/" class="hover:underline">
+                etml.burkhalter.dev
+              </a>
             </li>
             <li>Codé avec 💙 par votre délégué Yannis Burkhalter</li>
           </ul>
@@ -36,8 +36,8 @@ const authStore = useAuthStore()
             <li>
               Discord :
               <a
-                target="_blank"
                 href="https://discord.com/users/317230160124313610"
+                target="_blank"
                 class="hover:underline"
               >
                 aestetica
@@ -70,25 +70,25 @@ const authStore = useAuthStore()
           <label>Prénom :</label>
           <input
             type="text"
-            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
             :value="authStore.user?.firstName"
             readonly
+            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
           />
           <label>Nom :</label>
           <input
             type="text"
-            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
             :value="authStore.user?.lastName"
             readonly
+            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
           />
         </div>
         <div class="flex items-end gap-1">
           <label>E-mail :</label>
           <input
             type="text"
-            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
             :value="authStore.user?.email"
             readonly
+            class="flex-grow w-0 px-2 text-xl bg-transparent border-b outline-none text-bic-blue border-etml font-handwriting"
           />
         </div>
         <div class="flex items-end gap-1">
@@ -102,9 +102,9 @@ const authStore = useAuthStore()
           </select>
         </div>
         <textarea
-          class="flex-grow p-2 bg-transparent border outline-none resize-none text-bic-blue border-etml font-handwriting"
           placeholder="Bio..."
           readonly
+          class="flex-grow p-2 bg-transparent border outline-none resize-none text-bic-blue border-etml font-handwriting"
         ></textarea>
       </div>
       <div

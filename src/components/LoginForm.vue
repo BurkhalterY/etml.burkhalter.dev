@@ -40,16 +40,16 @@ onLoginDone((result) => {
     <input
       type="text"
       v-model="email"
-      class="p-2 border rounded-sm"
       @keyup.enter="login"
+      class="p-2 border rounded-sm"
     />
 
     <label>Mot de passe :</label>
     <input
       type="password"
       v-model="password"
-      class="p-2 border rounded-sm"
       @keyup.enter="login"
+      class="p-2 border rounded-sm"
     />
 
     <button

@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        etml: "#0060cf",
+        etml: "#004595",
         "bic-blue": "#284283",
       },
       fontFamily: {

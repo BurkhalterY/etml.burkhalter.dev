@@ -55,12 +55,13 @@ const LINES_ON_SUNDAY = 3
       <div class="w-full border-b border-orange-700">&nbsp;</div>
     </div>
     <div
-      class="w-full xl:w-1/2 xl:pr-16"
       v-for="(day, i) in result?.week?.days?.map((day) => ({
         ...day,
         strDate: day.date,
         date: new Date(day.date),
       })) || []"
+      :key="i"
+      class="w-full xl:w-1/2 xl:pr-16"
     >
       <h2
         @click="
@@ -81,8 +82,8 @@ const LINES_ON_SUNDAY = 3
           {{ days[day.date.getDay()] }}
         </span>
         <span
-          class="float-right text-2xl font-light"
           v-if="i == 0 || day.date.getDate() == 1"
+          class="float-right text-2xl font-light"
         >
           {{ months[day.date.getMonth()] }}
         </span>
@@ -95,6 +96,7 @@ const LINES_ON_SUNDAY = 3
               0,
               (day.date.getDay() ? LINES_PER_DAY : LINES_ON_SUNDAY) - 1
             )"
+          :key="task.id"
           class="relative leading-relaxed truncate border-b border-orange-700"
           :title="task.title"
         >
@@ -177,6 +179,7 @@ const LINES_ON_SUNDAY = 3
               1,
             0
           )"
+          :key="i"
           class="leading-relaxed border-b border-orange-700"
         >
           &nbsp;

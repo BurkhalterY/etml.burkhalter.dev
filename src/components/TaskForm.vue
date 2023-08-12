@@ -132,15 +132,15 @@ const resetInterval = () => {
     <input
       type="date"
       v-model="task.date"
-      class="p-2 border rounded-sm"
       @keyup.enter="mutate"
+      class="p-2 border rounded-sm"
     />
 
     <label>Classe :</label>
     <select
       v-model="task.promotion"
-      class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
+      class="p-2 bg-white border rounded-sm"
     >
       <option value="mtu1e">MTU1E</option>
       <option value="mtu2e">MTU2E</option>
@@ -149,8 +149,8 @@ const resetInterval = () => {
     <label>Type :</label>
     <select
       v-model="task.type"
-      class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
+      class="p-2 bg-white border rounded-sm"
     >
       <option value="homework">Devoir</option>
       <option value="test">Test</option>
@@ -160,10 +160,14 @@ const resetInterval = () => {
     <label>Matière :</label>
     <select
       v-model="matter"
-      class="p-2 bg-white border rounded-sm"
       @keyup.enter="mutate"
+      class="p-2 bg-white border rounded-sm"
     >
-      <option v-for="matter in result?.matters || []" :value="matter.abbr">
+      <option
+        v-for="matter in result?.matters || []"
+        :key="matter.abbr"
+        :value="matter.abbr"
+      >
         {{ matter.name }}
       </option>
     </select>
@@ -172,8 +176,8 @@ const resetInterval = () => {
     <input
       type="text"
       v-model="task.title"
-      class="p-2 border rounded-sm"
       @keyup.enter="mutate"
+      class="p-2 border rounded-sm"
     />
 
     <div class="flex gap-1">

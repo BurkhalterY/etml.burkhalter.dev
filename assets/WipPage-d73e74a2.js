@@ -1,1 +1,0 @@
-import{S as e,o,a as s}from"./index-287e0e1d.js";const c={},r={class:"block"};function n(t,a){return o(),s("code",r,"Work in progress... more pages soon!")}const p=e(c,[["render",n]]);export{p as default};

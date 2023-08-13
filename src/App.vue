@@ -22,7 +22,7 @@ const unnumberedPages = reactive([0, 1, 2, 98, 99])
       }"
     >
       <router-view v-slot="{ Component, route }">
-        <transition mode="out-in" :duration="5">
+        <transition mode="out-in">
           <component
             :is="Component"
             :key="route.path"

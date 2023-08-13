@@ -27,6 +27,11 @@ const routes = [
     component: () => import("@/views/WipPage.vue"),
   },
   {
+    path: "/:promotion/end",
+    name: "End",
+    component: () => import("@/views/CoverPage.vue"),
+  },
+  {
     path: "/:pathMatch(.*)*",
     redirect: "/mtu2e",
   },

@@ -9,7 +9,7 @@ const authStore = useAuthStore()
 </script>
 
 <template>
-  <div class="flex flex-col pl-16 text-etml xl:ml-[50%]">
+  <div class="flex flex-col text-etml xl:ml-[50%]">
     <div class="grid grid-cols-3 gap-1 mb-8">
       <img src="/img/etml.svg" alt="ETML" loading="lazy" />
       <div class="col-span-2">

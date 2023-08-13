@@ -1,21 +1,28 @@
 <script setup>
+import Spirals from "@/components/Spirals.vue"
 import TheHeader from "@/components/TheHeader.vue"
 import { usePageStore } from "@/stores/page"
 import { usePopupStore } from "@/stores/popup"
+import { reactive } from "vue"
 
 const popupStore = usePopupStore()
 const pageStore = usePageStore()
+
+const unnumberedPages = reactive([0, 1, 2, 98, 99])
 </script>
 
 <template>
   <div>
     <TheHeader />
     <div
-      class="max-w-xl mx-auto overflow-hidden transition-all bg-white md:my-8 xl:max-w-6xl drop-shadow-lg"
-      :class="pageStore.pageRight != 1 ? 'page' : 'half-page'"
+      class="max-w-xl mx-auto overflow-hidden transition-all bg-white md:my-8 xl:max-w-6xl drop-shadow-lg page"
+      :class="{
+        'right-page': pageStore.pageRight == 1,
+        'left-page': pageStore.pageLeft == 98,
+      }"
     >
       <router-view v-slot="{ Component, route }">
-        <transition mode="out-in">
+        <transition mode="out-in" :duration="5">
           <component
             :is="Component"
             :key="route.path"
@@ -24,33 +31,29 @@ const pageStore = usePageStore()
         </transition>
       </router-view>
       <div
-        v-if="pageStore.pageLeft >= 4"
+        v-if="!unnumberedPages.includes(pageStore.pageLeft)"
         class="absolute text-sm font-bold bottom-10 left-16 text-etml"
       >
         {{ pageStore.pageLeft }}
       </div>
       <div
-        v-if="pageStore.pageRight >= 2"
+        v-if="!unnumberedPages.includes(pageStore.pageRight)"
         class="absolute text-sm font-bold bottom-10 right-16 text-etml"
       >
         {{ pageStore.pageRight }}
       </div>
       <div
-        v-if="pageStore.pageRight != 1"
+        v-if="!unnumberedPages.includes(pageStore.pageRight)"
         class="absolute w-24 h-24 -rotate-45 border-t border-black border-dashed -bottom-12 -right-12"
       />
     </div>
     <div
-      class="absolute top-0 justify-between hidden w-16 py-8 mt-24 -translate-x-1/2 xl:flex flex-col md:mt-20 left-1/2 right-1/2 h-[775px]"
+      class="absolute top-0 flex-col justify-around hidden w-16 mt-24 -translate-x-1/2 xl:flex left-1/2 right-1/2 h-[735px]"
     >
-      <div v-for="i in 28" class="w-16 h-0 overflow-visible">
-        <img
-          :src="
-            pageStore.pageRight != 1
-              ? '/img/spirals-1.svg'
-              : '/img/spirals-2.svg'
-          "
-          class="-scale-x-100"
+      <div v-for="i in 28" class="w-full h-0 overflow-visible">
+        <Spirals
+          :firstPage="pageStore.pageRight == 1"
+          :lastPage="pageStore.pageLeft == 98"
         />
       </div>
     </div>
@@ -74,27 +77,53 @@ const pageStore = usePageStore()
     clip-path: polygon(
       100% 0,
       100% 100%,
-      calc(50% + 0.25rem) 100%,
-      calc(50% + 0.25rem) 0,
-      calc(50% - 0.25rem) 0,
+      calc(50% + 4px) 100%,
+      calc(50% + 4px) 0,
+      calc(50% - 4px) 0,
       0 0,
       0 100%,
-      calc(50% - 0.25rem) 100%,
-      calc(50% - 0.25rem) 0
+      calc(50% - 4px) 100%,
+      calc(50% - 4px) 0
     );
   }
-
-  .half-page {
+  .right-page {
     clip-path: polygon(
       100% 0,
       100% 100%,
-      calc(50% + 0.25rem) 100%,
-      calc(50% + 0.25rem) 0,
-      calc(50% + 0.25rem) 0,
-      calc(50% + 0.25rem) 0,
-      calc(50% + 0.25rem) 100%,
-      calc(50% + 0.25rem) 100%,
-      calc(50% + 0.25rem) 0
+      calc(50% + 4px) 100%,
+      calc(50% + 4px) 0,
+      calc(50% + 4px) 0,
+      calc(50% + 4px) 0,
+      calc(50% + 4px) 100%,
+      calc(50% + 4px) 100%,
+      calc(50% + 4px) 0
+    );
+  }
+  .left-page {
+    clip-path: polygon(
+      calc(50% - 4px) 0,
+      calc(50% - 4px) 100%,
+      calc(50% - 4px) 100%,
+      calc(50% - 4px) 0,
+      calc(50% - 4px) 0,
+      0 0,
+      0 100%,
+      calc(50% - 4px) 100%,
+      calc(50% - 4px) 0
+    );
+  }
+  .closed-page {
+    /* unused */
+    clip-path: polygon(
+      calc(50% - 4px) 0,
+      calc(50% - 4px) 100%,
+      calc(50% + 4px) 100%,
+      calc(50% + 4px) 0,
+      calc(50% - 4px) 0,
+      calc(50% + 4px) 0,
+      calc(50% + 4px) 100%,
+      calc(50% - 4px) 100%,
+      calc(50% - 4px) 0
     );
   }
 }

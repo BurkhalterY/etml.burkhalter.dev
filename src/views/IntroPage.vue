@@ -106,6 +106,12 @@ const authStore = useAuthStore()
           readonly
           class="flex-grow p-2 bg-transparent border outline-none resize-none text-bic-blue border-etml font-handwriting"
         ></textarea>
+        <button
+          @click="authStore.logout"
+          class="w-full p-2 -mt-2 border rounded border-etml hover:bg-etml hover:text-white"
+        >
+          Déconnexion
+        </button>
       </div>
       <div
         v-if="!authStore.logged"

@@ -12,6 +12,10 @@ export const useAuthStore = defineStore("auth", () => {
     fetchPolicy: "network-only",
   })
 
+  watch(loading, async (value) => {
+    if (!value && !error.value) user.value = result.value.me
+  })
+
   if (localStorage.hasOwnProperty("token")) load()
 
   const login = (token) => {
@@ -19,9 +23,10 @@ export const useAuthStore = defineStore("auth", () => {
     load()
   }
 
-  watch(loading, async (value) => {
-    if (!value && !error.value) user.value = result.value.me
-  })
+  const logout = () => {
+    localStorage.removeItem("token")
+    user.value = null
+  }
 
-  return { login, user, logged, isAdmin }
+  return { user, logged, isAdmin, login, logout }
 })

@@ -47,7 +47,9 @@ const LINES_ON_SUNDAY = 3
       <div class="w-full border-b border-orange-700">
         <template v-if="error">
           <transition appear>
-            <div class="text-center text-red-500">Une erreur est survenue</div>
+            <div class="text-center text-red-500 transition-opacity">
+              Une erreur est survenue
+            </div>
           </transition>
         </template>
         <template v-else>&nbsp;</template>

@@ -227,7 +227,7 @@ const schedule = reactive({
         },
         {
           start: "08:50",
-          end: "09:85",
+          end: "09:35",
           matter: "Allemand",
           classroom: "S316",
         },

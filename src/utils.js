@@ -14,7 +14,7 @@ export const getYear = (promotion, week) => {
   if (promotion == "mtu2e") return 2024 - (week > 26)
 }
 
-export const now = () => getWeekNumber(new Date(Date.now() + 86400000)) // jump directly to the next week when it is the weekend
+export const now = () => getWeekNumber(new Date(Date.now() + 172800000)) // jump directly to the next week when it is the weekend
 
 export const days = [
   "Dimanche",

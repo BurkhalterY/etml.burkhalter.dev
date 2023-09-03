@@ -10,10 +10,10 @@ const authStore = useAuthStore()
 
 <template>
   <div class="flex flex-col text-etml xl:ml-[50%]">
-    <div class="grid grid-cols-3 gap-1 mb-8">
-      <img src="/img/etml.svg" alt="ETML" loading="lazy" />
+    <div class="flex items-start grid-cols-3 gap-1 mb-8">
+      <img src="/img/etml.svg" alt="ETML" loading="lazy" class="h-8" />
       <div class="col-span-2">
-        <h1 class="leading-3 font-logo">
+        <h1 class="leading-2/3 font-logo">
           <br />Ecole Technique <br />Ecole des metiers Lausanne
         </h1>
         <hr class="my-8 border-etml" />

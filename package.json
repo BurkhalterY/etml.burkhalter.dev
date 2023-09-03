@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.0",
+    "@apollo/client": "^3.8.2",
     "@heroicons/vue": "^2.0.18",
     "@vue/apollo-composable": "4.0.0-beta.4",
-    "graphql": "^16.7.1",
+    "graphql": "^16.8.0",
     "graphql-tag": "^2.12.6",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.4",
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.27",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.29",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.9"
   }

@@ -1,5 +1,6 @@
 <script setup>
 import { usePageStore } from "@/stores/page"
+import { usePopupStore } from "@/stores/popup"
 import { now } from "@/utils"
 import {
   BackwardIcon,
@@ -7,11 +8,13 @@ import {
   ForwardIcon,
   HomeIcon,
 } from "@heroicons/vue/20/solid"
+import { onMounted, onUnmounted } from "vue"
 import { useRoute, useRouter } from "vue-router"
 
 const route = useRoute()
 const router = useRouter()
 const pageStore = usePageStore()
+const popupStore = usePopupStore()
 
 const choosePromotion = (promotion) => {
   router.push({
@@ -22,6 +25,20 @@ const choosePromotion = (promotion) => {
     },
   })
 }
+
+const onKeyDown = (event) => {
+  if (popupStore.component || event.target.tagName != "BODY") return
+  if (event.keyCode == 37) pageStore.pageLeft--
+  if (event.keyCode == 39) pageStore.pageRight++
+}
+
+onMounted(() => {
+  document.addEventListener("keydown", onKeyDown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener("keydown", onKeyDown)
+})
 </script>
 
 <template>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="51.1" height="51.1"
+    viewBox="-15 31.5 511 511">
+    <!-- Source: https://www.etml.ch/templates/inetis/font/etml2.svg -->
+    <!-- Edited by YBU -->
+    <path fill="#004595" transform="scale(1, -1)" transform-origin="0"
+        d="M-0.086 186.51c0.171-58.112 22.016-107.378 68.323-151.95 46.62-44.288 97.792-65.45 156.899-65.622h257.849v113.778h-257.877c-27.193-0.114-52.964 10.439-74.695 29.554-22.044 18.887-35.356 43.606-35.868 71.111v184.32l368.413-0.256v111.616h-483.043v-292.551zM198.286 184.946c0.313-4.438 1.024-6.884 6.969-12.060 6.315-4.95 12.060-6.884 19.882-7.054l257.849 0.284v115.171h-284.7v-96.341z" />
+</svg>

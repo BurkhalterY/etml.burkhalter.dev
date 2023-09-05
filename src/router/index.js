@@ -1,3 +1,4 @@
+import { now } from "@/utils"
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
@@ -15,6 +16,17 @@ const routes = [
     path: "/:promotion/schedule",
     name: "Schedule",
     component: () => import("@/views/SchedulePage.vue"),
+  },
+  {
+    path: "/:promotion/agenda/today",
+    name: "Agenda.Today",
+    redirect: (to) => ({
+      name: "Agenda",
+      params: {
+        ...to.params,
+        week: now().week,
+      },
+    }),
   },
   {
     path: "/:promotion/agenda/:week",

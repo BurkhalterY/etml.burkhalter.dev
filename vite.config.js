@@ -14,7 +14,7 @@ export default defineConfig({
         short_name: "ETML",
         start_url: "/mtu2e/agenda/today",
         display: "standalone",
-        background_color: "#ffffff",
+        background_color: "#004595",
         theme_color: "#004595",
         icons: [
           {

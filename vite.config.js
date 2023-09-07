@@ -47,6 +47,11 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/png",
           },
+          {
+            src: "img/icons/etml1024.png",
+            sizes: "1024x1024",
+            type: "image/png",
+          },
         ],
       },
       devOptions: {

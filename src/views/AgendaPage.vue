@@ -56,7 +56,7 @@ const LINES_ON_SUNDAY = 3
         <template v-if="!online">
           <transition appear>
             <div class="text-center text-red-500 transition-opacity">
-              Aucune connexion Internet.
+              Aucune connexion Internet !
             </div>
           </transition>
         </template>

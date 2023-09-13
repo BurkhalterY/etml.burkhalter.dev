@@ -14,8 +14,6 @@ const router = useRouter()
 const authStore = useAuthStore()
 const popupStore = usePopupStore()
 
-const online = computed(() => navigator.onLine)
-
 const week = computed(() => {
   const w = parseInt(route.params.week)
   if (w > 26 && w < 34)
@@ -53,7 +51,7 @@ const LINES_ON_SUNDAY = 3
         </h2>
       </div>
       <div class="w-full border-b border-orange-700">
-        <template v-if="!online">
+        <template v-if="!navigator.onLine">
           <transition appear>
             <div class="text-center text-red-500 transition-opacity">
               Aucune connexion Internet.
@@ -70,10 +68,10 @@ const LINES_ON_SUNDAY = 3
         <template v-else>&nbsp;</template>
       </div>
       <div class="w-full border-b border-orange-700">
-        <template v-if="!online">
+        <template v-if="!navigator.onLine">
           <transition appear>
             <div class="text-center text-red-500 transition-opacity">
-              Les données affichées peuvent ne pas être à jour.
+              Les données peuvent ne pas être à jour.
             </div>
           </transition>
         </template>

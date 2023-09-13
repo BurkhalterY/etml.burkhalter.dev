@@ -73,7 +73,7 @@ const LINES_ON_SUNDAY = 3
         <template v-if="!online">
           <transition appear>
             <div class="text-center text-red-500 transition-opacity">
-              Les données affichées peuvent ne pas être à jour.
+              Les données peuvent ne pas être à jour.
             </div>
           </transition>
         </template>

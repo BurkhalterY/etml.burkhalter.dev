@@ -14,6 +14,8 @@ const router = useRouter()
 const authStore = useAuthStore()
 const popupStore = usePopupStore()
 
+const online = computed(() => navigator.onLine)
+
 const week = computed(() => {
   const w = parseInt(route.params.week)
   if (w > 26 && w < 34)
@@ -22,11 +24,17 @@ const week = computed(() => {
 })
 const year = computed(() => getYear(route.params.promotion, week.value))
 
-const { result, error } = useQuery(GET_WEEK, () => ({
-  promotion: route.params.promotion,
-  year: year.value,
-  week: week.value,
-}))
+const { result, error } = useQuery(
+  GET_WEEK,
+  () => ({
+    promotion: route.params.promotion,
+    year: year.value,
+    week: week.value,
+  }),
+  {
+    fetchPolicy: "cache-and-network",
+  }
+)
 
 const LINES_PER_DAY = 5
 const LINES_ON_SUNDAY = 3
@@ -45,7 +53,14 @@ const LINES_ON_SUNDAY = 3
         </h2>
       </div>
       <div class="w-full border-b border-orange-700">
-        <template v-if="error">
+        <template v-if="!online">
+          <transition appear>
+            <div class="text-center text-red-500 transition-opacity">
+              Aucune connexion Internet.
+            </div>
+          </transition>
+        </template>
+        <template v-else-if="error">
           <transition appear>
             <div class="text-center text-red-500 transition-opacity">
               Une erreur est survenue
@@ -54,7 +69,16 @@ const LINES_ON_SUNDAY = 3
         </template>
         <template v-else>&nbsp;</template>
       </div>
-      <div class="w-full border-b border-orange-700">&nbsp;</div>
+      <div class="w-full border-b border-orange-700">
+        <template v-if="!online">
+          <transition appear>
+            <div class="text-center text-red-500 transition-opacity">
+              Les données affichées peuvent ne pas être à jour.
+            </div>
+          </transition>
+        </template>
+        <template v-else>&nbsp;</template>
+      </div>
     </div>
     <div
       v-for="(day, i) in result?.week?.days?.map((day) => ({

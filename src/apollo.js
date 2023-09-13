@@ -40,4 +40,4 @@ const getApolloClient = async () => {
   return client
 }
 
-export default getApolloClient()
+export default await getApolloClient()

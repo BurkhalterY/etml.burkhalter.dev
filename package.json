@@ -13,7 +13,7 @@
     "@heroicons/vue": "^2.0.18",
     "@vue/apollo-composable": "4.0.0-beta.4",
     "apollo3-cache-persist": "^0.14.1",
-    "graphql": "^16.8.0",
+    "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",

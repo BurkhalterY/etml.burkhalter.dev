@@ -8,7 +8,7 @@ import {
   ForwardIcon,
   HomeIcon,
 } from "@heroicons/vue/20/solid"
-import { onMounted, onUnmounted } from "vue"
+import { onMounted, onUnmounted, reactive } from "vue"
 import { useRoute, useRouter } from "vue-router"
 
 const route = useRoute()
@@ -40,12 +40,44 @@ const onKeyDown = (event) => {
     })
 }
 
+/* Turn page with swiping on mobile
+https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
+*/
+const touch = reactive({ x: null, y: null })
+const onTouchStart = (event) => {
+  touch.x = event.touches[0].clientX
+  touch.y = event.touches[0].clientY
+}
+const onTouchMove = (event) => {
+  if (!touch.x || !touch.y) return
+
+  let xDiff = touch.x - event.touches[0].clientX
+  let yDiff = touch.y - event.touches[0].clientY
+
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    /*most significant*/
+    if (xDiff < 0) {
+      pageStore.pageLeft--
+    } else {
+      pageStore.pageRight++
+    }
+  }
+  console.log(xDiff, yDiff)
+
+  touch.x = null
+  touch.y = null
+}
+
 onMounted(() => {
   document.addEventListener("keydown", onKeyDown)
+  document.addEventListener("touchstart", onTouchStart)
+  document.addEventListener("touchmove", onTouchMove)
 })
 
 onUnmounted(() => {
   document.removeEventListener("keydown", onKeyDown)
+  document.removeEventListener("touchstart", onTouchStart)
+  document.removeEventListener("touchmove", onTouchMove)
 })
 </script>
 

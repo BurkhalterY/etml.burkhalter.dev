@@ -30,6 +30,14 @@ const onKeyDown = (event) => {
   if (popupStore.component || event.target.tagName != "BODY") return
   if (event.keyCode == 37) pageStore.pageLeft--
   if (event.keyCode == 39) pageStore.pageRight++
+  if (event.keyCode == 36 && route.params.promotion == "mtu2e")
+    router.push({
+      name: "Agenda",
+      params: {
+        promotion: route.params.promotion,
+        week: now().week,
+      },
+    })
 }
 
 onMounted(() => {

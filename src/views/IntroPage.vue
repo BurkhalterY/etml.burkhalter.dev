@@ -40,7 +40,7 @@ const authStore = useAuthStore()
                 target="_blank"
                 class="hover:underline"
               >
-                aestetica
+                burkhalter
               </a>
             </li>
           </ul>

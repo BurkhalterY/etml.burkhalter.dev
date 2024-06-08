@@ -187,13 +187,13 @@ const schedule = reactive({
         {
           start: "12:20",
           end: "13:05",
-          matter: "Droit",
+          matter: "TIB | Droit",
           classroom: "S316",
         },
         {
           start: "13:10",
           end: "13:55",
-          matter: "Droit",
+          matter: "TIB | Droit",
           classroom: "S316",
         },
         {

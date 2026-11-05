@@ -1,0 +1,1 @@
+var e=`/img/etml.svg`;export{e as t};
